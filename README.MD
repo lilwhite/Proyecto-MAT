@@ -1,5 +1,13 @@
 <h1>Proyecto MAT</h1>
 
-<p>Se nos solicita implementar un script de automatización que despliegue dos máquinas virtuales Windows Server 2016 Datacenter Core con IIS y un balanceador de carga para publicar el servicio web de las dos máquinas en una IP pública.</p>
-
-<p>El servicio web debe desplegarse en las máquinas virtuales utilizando DSC (Desired State Configuration). Este servicio web balanceado debe estar monitorizado de forma que cuando deje de estar disponible (las dos máquinas virtuales fallan) se reiniciarán. Si el reinicio falla tras 3 intentos, debe enviar un correo electrónico al administrador del tenant Azure.</p>
+<p>La empresa MAT está planteando la migración de una parte de su arquitectura a Microsoft Azure.
+  Ha planificado desplegar en Azure las cargas de trabajo que requieren más recursos y mantener
+  on-premises los servicios más críticos para la seguridad:</p>
+<p>La red de la empresa cuenta con un dominio mat.com implementado con dos controladores de dominio
+  on-premises para alta disponibilidad.</p>
+<p>En el dominio on-premises hay 20 usuarios repartidos en 3 grupos:</p>
+<ul>
+  <li>Sistemas: 3 usuarios</li>
+  <li>Logística: 7 usuarios</li>
+  <li>Desarrollo: 10 usuarios</li>
+</ul>
