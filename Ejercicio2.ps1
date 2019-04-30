@@ -28,3 +28,5 @@ $PublicSettings = '{"ModulesURL":"https://github.com/Azure/azure-quickstart-temp
 Set-AzVMExtension -ExtensionName "DSC" -ResourceGroupName $resourceGroup -VMName $vmName `
   -Publisher "Microsoft.Powershell" -ExtensionType "DSC" -TypeHandlerVersion 2.19 `
   -SettingString $PublicSettings -Location $location
+
+# Prueba Commit
