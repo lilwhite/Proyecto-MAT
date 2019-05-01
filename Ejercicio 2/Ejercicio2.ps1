@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 # SCRIPT EJERCICIO-2
+=======
+>>>>>>> 014361901bbec1fa91491993605cc0f1aa6ee271
 # Variables comunes
 $ResourceGroupName = "RG-WebEmpresa"
 $LocationName = "eastus"
