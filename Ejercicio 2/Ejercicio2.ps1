@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 # SCRIPT EJERCICIO-2
-=======
->>>>>>> 014361901bbec1fa91491993605cc0f1aa6ee271
 # Variables comunes
 $ResourceGroupName = "RG-WebEmpresa"
 $LocationName = "eastus"
@@ -15,12 +12,16 @@ $SubnetName = "WebSubnet"
 $SubnetAddressPrefix = "10.0.0.0/24"
 $VnetAddressPrefix = "10.0.0.0/16"
 
+# Crear nuevo recurso
+New-AzResourceGroup -Name $ResourceGroupName -Location $LocationName
+
+# Creación de subredes
+
 $SingleSubnet = New-AzVirtualNetworkSubnetConfig -Name $SubnetName -AddressPrefix $SubnetAddressPrefix
 $Vnet = New-AzVirtualNetwork -Name $NetworkName -ResourceGroupName $ResourceGroupName -Location $LocationName -AddressPrefix $VnetAddressPrefix -Subnet $SingleSubnet
 $NIC = New-AzNetworkInterface -Name $NICName -ResourceGroupName $ResourceGroupName -Location $LocationName -SubnetId $Vnet.Subnets[0].Id
 
-# Crear nuevo recurso
-New-AzResourceGroup -Name $resourceGroup -Location $location
+
 
 # Crear usuario para la máquina virtual
 $Credential = Get-Credential -Message "Introduce el usuario y contraseña de la máquina virtual."
