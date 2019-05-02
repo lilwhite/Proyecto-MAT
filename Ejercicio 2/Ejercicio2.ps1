@@ -1,44 +1,38 @@
-# SCRIPT EJERCICIO-2
-# Variables comunes
-$ResourceGroupName = "RG-WebEmpresa"
-$LocationName = "eastus"
-$VMName = "VM"
-$ComputerName = "VM"
-$VMSize = "Standar_B1S"
+# Script Ejercicio 2
+# Variables Comunes
+$1ResourceGroupName = "myResourceGroup"
+$1Location = "eastus"
+$1vmName = "WebEmpresa"
+$1ImageName = "MicrosoftWindowsServer:WindowsServer:2016-Datacenter-Server-Core:latest"
+$1VirtualNetworkName = "WebVNET"
+$1SubnetName = "WebSubVNET"
+$1SecurityGroupName = "WebNSG"
+$1PublicIpAddressName = "WebPublicIP"
+$1Size = "Standard_B1s"
 
-$NetworkName = "WebVnet"
-$NICname = "WebNIC"
-$SubnetName = "WebSubnet"
-$SubnetAddressPrefix = "10.0.0.0/24"
-$VnetAddressPrefix = "10.0.0.0/16"
+# Crear grupo de recursos
+New-AzResourceGroup -Name $1ResourceGroupName -Location $1Location
 
-# Crear nuevo recurso
-New-AzResourceGroup -Name $ResourceGroupName -Location $LocationName
+# Crea el objeto de usuario
+$1cred = Get-Credential -Message "Introduce el usuario y la contraseña para la máquina virtual."
 
-# Creación de subredes
-
-$SingleSubnet = New-AzVirtualNetworkSubnetConfig -Name $SubnetName -AddressPrefix $SubnetAddressPrefix
-$Vnet = New-AzVirtualNetwork -Name $NetworkName -ResourceGroupName $ResourceGroupName -Location $LocationName -AddressPrefix $VnetAddressPrefix -Subnet $SingleSubnet
-$NIC = New-AzNetworkInterface -Name $NICName -ResourceGroupName $ResourceGroupName -Location $LocationName -SubnetId $Vnet.Subnets[0].Id
-
-
-
-# Crear usuario para la máquina virtual
-$Credential = Get-Credential -Message "Introduce el usuario y contraseña de la máquina virtual."
-
-# Creación máquina virtual
-# Publicador: Microsoft Windows server
-# Oferta: Windows Server
-# SKU: 2016-Datacenter-Server-Core
-
-$VirtualMachine = New-AzVMConfig -VMName $VMName -VMSize $VMSize
-$VirtualMachine = Set-AzVMOperatingSystem -VM $VirtualMachine -Windows -ComputerName $ComputerName -Credential $Credential -ProvisionVMAgent -EnableAutoUpdate
-$VirtualMachine = Add-AzVMNetworkInterface -VM $VirtualMachine -Id $NIC.Id
-$VirtualMachine = Set-AzVMSourceImage -VM $VirtualMachine -PublisherName 'MicrosoftWindowsServer' -Offer 'WindowsServer' -Skus '2016-Datacenter-Server-Core' -Version latest
-
-New-AzVM -ResourceGroupName $ResourceGroupName -VM $VirtualMachine -Location $LocationName -SecurityGroupName "WEB-NSG" -PublicIpAddressName "WebEmpresa" -OpenPorts 80 -Verbose
+# Crea la máquina virtual
+New-AzVM `
+  -ResourceGroupName $1ResourceGroupName `
+  -Name $1vmName `
+  -Location $1location `
+  -ImageName $1ImageName `
+  -VirtualNetworkName $1VirtualNetworkName `
+  -SubnetName $1SubnetName `
+  -SecurityGroupName $1SecurityGroupName `
+  -PublicIpAddressName $1PublicIpAddressName `
+  -Credential $1cred `
+  -Size $1Size `
+  -OpenPorts 80
 
 # Instalación IIS
-$PublicSettings = '{"ModulesURL":"https://github.com/Azure/azure-quickstart-templates/raw/master/dsc-extension-iis-server-windows-vm/ContosoWebsite.ps1.zip", "configurationFunction": "ContosoWebsite.ps1\\ContosoWebsite", "Properties": {"MachineName": "myVM"} }'
+$1PublicSettings = '{"ModulesURL":"https://github.com/Azure/azure-quickstart-templates/raw/master/dsc-extension-iis-server-windows-vm/ContosoWebsite.ps1.zip", "configurationFunction": "ContosoWebsite.ps1\\ContosoWebsite", "Properties": {"MachineName": "myVM"} }'
 
-Set-AzVMExtension -ExtensionName "DSC" -ResourceGroupName $ResourceGroupName -VMName $VMName -Publisher "Microsoft.Powershell" -ExtensionType "DSC" -TypeHandlerVersion 2.19 -SettingString $PublicSettings -Location $LocationName
+Set-AzVMExtension -ExtensionName "DSC" -ResourceGroupName $1ResourceGroupName -VMName $1vmName `
+  -Publisher "Microsoft.Powershell" -ExtensionType "DSC" -TypeHandlerVersion 2.19 `
+  -SettingString $1PublicSettings -Location $1Location
