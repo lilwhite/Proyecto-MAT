@@ -30,9 +30,32 @@ New-AzVM `
   -Size $1Size `
   -OpenPorts 80
 
-# Instalación IIS
-$1PublicSettings = '{"ModulesURL":"https://github.com/lilwhite/Proyecto-MAT/raw/master/Ejercicio-2/WebEmpresa.ps1.zip", "configurationFunction": "WebEmpresa.ps1\\WebEmpresa", "Properties": {"MachineName": "WebEmpresa"} }'
+# Instalación Web-Management-Service
 
-Set-AzVMExtension -ExtensionName "DSC" -ResourceGroupName $1ResourceGroupName -VMName $1vmName `
-  -Publisher "Microsoft.Powershell" -ExtensionType "DSC" -TypeHandlerVersion 2.19 `
-  -SettingString $1PublicSettings -Location $1Location
+Write-Host "Instalación Web-Management-Service" -ForegrundColor DarkGreen -BackgroundColor Black
+
+$1SettingsString = 'Install-WindowsFeature Web-Management-Service'
+
+Set-AzVMExtension `
+  -ResourceGroupName $1ResourceGroupName `
+  -Location $1Location `
+  -VMName $1vmName `
+  -Name "CustomScriptExtension" `
+  -Publisher "MAT.Compute" `
+  -Type "CustomScriptExtension" `
+  -TypeHandlerVersion "1.0" `
+  -SettingString $1SettingsString
+
+# Instalación IIS
+
+$1PublicSettings = '{"ModulesURL":"https://github.com/lilwhite/Proyecto-MAT/raw/master/Ejercicio-2/WebEmpresa.ps1.zip", "configurationFunction": "WebEmpresa.ps1\\WebEmpresa", "Properties": {"MachineName": '+'"'+$1vmName+'"'+'} }'
+
+Set-AzVMExtension `
+  -ExtensionName "DSC" `
+  -ResourceGroupName $1ResourceGroupName `
+  -VMName $1vmName `
+  -Publisher "Microsoft.Powershell" `
+  -ExtensionType "DSC" `
+  -TypeHandlerVersion 2.7 `
+  -SettingString $1PublicSettings `
+  -Location $1Location
