@@ -4,12 +4,6 @@ Configuration WebEmpresa
 
   Node $MachineName
   {
-    #Install Web-Mgmt-Console
-    WindowsFeature WebServerManagementConsole
-    {
-      Ensure = "Present"
-      Name = "IIS-Management-Console"
-    }  
     #Install the IIS Role
     WindowsFeature IIS
     {
