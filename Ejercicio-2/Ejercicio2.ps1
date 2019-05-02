@@ -31,7 +31,7 @@ New-AzVM `
   -OpenPorts 80
 
 # Instalación IIS
-$1PublicSettings = '{"ModulesURL":"https://github.com/lilwhite/Proyecto-MAT/blob/master/Ejercicio%202/WebEmpresa.ps1.zip", "configurationFunction": "WebEmpresa.ps1\\WebEmpresa", "Properties": {"MachineName": "WebEmpresa"} }'
+$1PublicSettings = '{"ModulesURL":"https://github.com/lilwhite/Proyecto-MAT/raw/master/Ejercicio-2/WebEmpresa.ps1.zip", "configurationFunction": "WebEmpresa.ps1\\WebEmpresa", "Properties": {"MachineName": "WebEmpresa"} }'
 
 Set-AzVMExtension -ExtensionName "DSC" -ResourceGroupName $1ResourceGroupName -VMName $1vmName `
   -Publisher "Microsoft.Powershell" -ExtensionType "DSC" -TypeHandlerVersion 2.19 `
