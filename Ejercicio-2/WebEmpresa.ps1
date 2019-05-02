@@ -8,7 +8,7 @@ Configuration WebEmpresa
     WindowsFeature WebServerManagementConsole
     {
       Ensure = "Present"
-      Name = "Web-Mgmt-Console"
+      Name = "IIS-Management-Console"
     }  
     #Install the IIS Role
     WindowsFeature IIS
