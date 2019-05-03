@@ -56,7 +56,7 @@ Add-AzLoadBalancerProbeConfig `
   -Protocol tcp `
   -Port 80 `
   -IntervalInSeconds 15 `
-  -ProbeCount 2
+  -ProbeCount 3
 
 # Aplicamos el sondeo de estado
 
