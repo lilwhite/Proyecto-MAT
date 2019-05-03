@@ -1,43 +1,58 @@
 # Creación del equilibrador de carga de Azure
 # https://docs.microsoft.com/es-es/azure/virtual-machines/windows/tutorial-load-balancer
 
+$1ResourceGroupName = "03-WebEmpresa"
+$1Location = "EastUS"
+$1vmName = "WebEmpresa"
+$1ImageName = "MicrosoftWindowsServer:WindowsServer:2016-Datacenter-Server-Core:latest"
+$1VirtualNetworkName = "WebVNET"
+$1SubnetName = "WebSubVNET"
+$1PublicIpAddressName = "WebPublicIP"
+$1Size = "Standard_B1s"
+
+
 New-AzResourceGroup `
-  -ResourceGroupName "myResourceGroupLoadBalancer" `
-  -Location "EastUS"
+  -ResourceGroupName $1ResourceGroupName `
+  -Location $1Location
 
 # Crear una dirección IP pública
+Write-Host "Creacion de IP Publica" -ForegroundColor DarkGreen -BackgroundColor Black
 
-$publicIP = New-AzPublicIpAddress `
-  -ResourceGroupName "myResourceGroupLoadBalancer" `
-  -Location "EastUS" `
+$1publicIP = New-AzPublicIpAddress `
+  -ResourceGroupName $1ResourceGroupName `
+  -Location $1Location `
   -AllocationMethod "Static" `
-  -Name "myPublicIP"
+  -Name "WebEmpresaIP"
 
 # Creación de un grupo de direcciones IP de front-end
+Write-Host "Pool de direccioes IP Front-End" -ForegroundColor DarkGreen -BackgroundColor Black
 
-$frontendIP = New-AzLoadBalancerFrontendIpConfig `
-  -Name "myFrontEndPool" `
-  -PublicIpAddress $publicIP
+$1frontendIP = New-AzLoadBalancerFrontendIpConfig `
+  -Name "WebFrontEndPool" `
+  -PublicIpAddress $1publicIP
 
 # Creación de un grupo de direcciones de back-end
+Write-Host "Pool de direcciones IP Back-End" -ForegroundColor DarkGreen -BackgroundColor Black
 
-$backendPool = New-AzLoadBalancerBackendAddressPoolConfig `
-  -Name "myBackEndPool"
+$1backendPool = New-AzLoadBalancerBackendAddressPoolConfig `
+  -Name "WebBackEndPool"
 
-# Creación del equilibrador de carga
+# Creación del balanceador de carga
+Write-Host "Creacion balanceador de carga" -ForegroundColor DarkGreen -BackgroundColor Black
 
-$lb = New-AzLoadBalancer `
-  -ResourceGroupName "myResourceGroupLoadBalancer" `
-  -Name "myLoadBalancer" `
-  -Location "EastUS" `
-  -FrontendIpConfiguration $frontendIP `
-  -BackendAddressPool $backendPool
+$1lb = New-AzLoadBalancer `
+  -ResourceGroupName $1ResourceGroupName `
+  -Name "WebEmpresaLB" `
+  -Location $1Location `
+  -FrontendIpConfiguration $1frontendIP `
+  -BackendAddressPool $1backendPool
 
 # Creación de un sondeo de estado
+Write-Host "Creacion de sonda de estado" -ForegroundColor DarkGreen -BackgroundColor Black
 
 Add-AzLoadBalancerProbeConfig `
-  -Name "myHealthProbe" `
-  -LoadBalancer $lb `
+  -Name "Hubble" `
+  -LoadBalancer $1lb `
   -Protocol tcp `
   -Port 80 `
   -IntervalInSeconds 15 `
@@ -45,84 +60,112 @@ Add-AzLoadBalancerProbeConfig `
 
 # Aplicamos el sondeo de estado
 
-Set-AzLoadBalancer -LoadBalancer $lb
+Set-AzLoadBalancer -LoadBalancer $1lb
 
 # Creación de una regla de equilibrador de carga
+Write-Host "Creacion regla de balanceo de carga" -ForegroundColor DarkGreen -BackgroundColor Black
 
-$probe = Get-AzLoadBalancerProbeConfig -LoadBalancer $lb -Name "myHealthProbe"
+$1probe = Get-AzLoadBalancerProbeConfig -LoadBalancer $1lb -Name "Hubble"
 
 Add-AzLoadBalancerRuleConfig `
-  -Name "myLoadBalancerRule" `
-  -LoadBalancer $lb `
-  -FrontendIpConfiguration $lb.FrontendIpConfigurations[0] `
-  -BackendAddressPool $lb.BackendAddressPools[0] `
+  -Name "WebEmpresaLB" `
+  -LoadBalancer $1lb `
+  -FrontendIpConfiguration $1lb.FrontendIpConfigurations[0] `
+  -BackendAddressPool $1lb.BackendAddressPools[0] `
   -Protocol Tcp `
   -FrontendPort 80 `
   -BackendPort 80 `
-  -Probe $probe
+  -Probe $1probe
 
 # Actualizamos el equilibrador de carga
 
-Set-AzLoadBalancer -LoadBalancer $lb
+Set-AzLoadBalancer -LoadBalancer $1lb
 
 # Creamos los recursos de red
+Write-Host "Creacion de los recursos de red" -ForegroundColor DarkGreen -BackgroundColor Black
 
 # Creamos la configuración de la subNet
 
-$subnetConfig = New-AzVirtualNetworkSubnetConfig `
-  -Name "mySubnet" `
+$1subnetConfig = New-AzVirtualNetworkSubnetConfig `
+  -Name $1SubnetName `
   -AddressPrefix 192.168.1.0/24
 
 # Creamos la Red Virtual
 
-$vnet = New-AzVirtualNetwork `
-  -ResourceGroupName "myResourceGroupLoadBalancer" `
-  -Location "EastUS" `
-  -Name "myVnet" `
+$1vnet = New-AzVirtualNetwork `
+  -ResourceGroupName $1ResourceGroupName `
+  -Location $1Location `
+  -Name $1VirtualNetworkName `
   -AddressPrefix 192.168.0.0/16 `
-  -Subnet $subnetConfig
+  -Subnet $1subnetConfig
 
 # Creación de NIC virtuales
 
 for ($i=1; $i -le 2; $i++)
 {
    New-AzNetworkInterface `
-     -ResourceGroupName "myResourceGroupLoadBalancer" `
-     -Name myVM$i `
-     -Location "EastUS" `
-     -Subnet $vnet.Subnets[0] `
-     -LoadBalancerBackendAddressPool $lb.BackendAddressPools[0]
+     -ResourceGroupName $1ResourceGroupName `
+     -Name "$1vmName$i" `
+     -Location $1Location `
+     -Subnet $1vnet.Subnets[0] `
+     -LoadBalancerBackendAddressPool $1lb.BackendAddressPools[0]
 }
+
+# Creación de AzAvailabilitySet
+Write-Host "Creacion de AzAvailabilitySet" -ForegroundColor DarkGreen -BackgroundColor Black
+
+$1availabilitySet = New-AzAvailabilitySet `
+  -ResourceGroupName $1ResourceGroupName `
+  -Name "WebEmpresaAS" `
+  -Location $1Location `
+  -Sku aligned `
+  -PlatformFaultDomainCount 2 `
+  -PlatformUpdateDomainCount 2
 
 # Introducimos credenciales
 
-$cred = Get-Credential
+$1cred = Get-Credential
 
 for ($i=1; $i -le 2; $i++)
-{
-    New-AzVm `
-        -ResourceGroupName "myResourceGroupLoadBalancer" `
-        -Name "myVM$i" `
-        -Location "East US" `
-        -VirtualNetworkName "myVnet" `
-        -SubnetName "mySubnet" `
-        -SecurityGroupName "myNetworkSecurityGroup" `
-        -OpenPorts 80 `
-        -Credential $cred `
-        -AsJob
-}
+  {
+    # Crea la máquina virtual
 
-for ($i=1; $i -le 2; $i++)
-{
-  $1PublicSettings = '{"ModulesURL":"https://github.com/lilwhite/Proyecto-MAT/raw/master/Ejercicio-2/WebEmpresa.ps1.zip", "configurationFunction": "WebEmpresa.ps1\\WebEmpresa", "Properties": {"MachineName": '+'"'+"myVM$i"+'"'+'} }'
+    Write-Host "Instalacion VM iniciandose" -ForegroundColor DarkGreen -BackgroundColor Black
 
-  Set-AzVMExtension `
-    -ExtensionName "DSC" `
-    -ResourceGroupName "myResourceGroupLoadBalancer" `
-    -VMName "myVM$i" `
-    -Publisher "Microsoft.Powershell" `
-    -ExtensionType "DSC" `
-    -TypeHandlerVersion 2.7 `
-    -SettingString $1PublicSettings `
-    -Location "East US"
-}
+    $2vmName = $1vmName + $i
+    $2VirtualNetworkName = $1VirtualNetworkName + $i
+    $2SubnetName = $1SubnetName + $i
+    $2PublicIpAddressName = $1PublicIpAddressName + $i
+
+    New-AzVM `
+      -ResourceGroupName $1ResourceGroupName `
+      -Name $2vmName `
+      -Location $1location `
+      -ImageName $1ImageName `
+      -VirtualNetworkName $2VirtualNetworkName `
+      -SubnetName $2SubnetName `
+      -AvailabilitySetName "WebEmpresaAS" `
+      -Credential $1cred `
+      -Size $1Size `
+      -OpenPorts 80
+
+    Write-Host "Instalacion VM finalizada" -ForegroundColor DarkGreen -BackgroundColor Black
+
+    # Instalación IIS
+
+    Write-Host "Instalacion Servidor IIS iniciandose" -ForegroundColor DarkGreen -BackgroundColor Black
+
+    $1PublicSettings = '{"ModulesURL":"https://github.com/lilwhite/Proyecto-MAT/raw/master/Ejercicio-2/WebEmpresa.ps1.zip", "configurationFunction": "WebEmpresa.ps1\\WebEmpresa", "Properties": {"MachineName": '+'"'+$2vmName+'"'+'} }'
+
+    Set-AzVMExtension `
+      -ExtensionName "DSC" `
+      -ResourceGroupName $1ResourceGroupName `
+      -VMName $2vmName `
+      -Publisher "Microsoft.Powershell" `
+      -ExtensionType "DSC" `
+      -TypeHandlerVersion 2.7 `
+      -SettingString $1PublicSettings `
+      -Location $1Location
+
+    Write-Host "Instalacion Servidor IIS completada" -ForegroundColor DarkGreen -BackgroundColor Black
+  }
