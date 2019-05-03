@@ -16,12 +16,15 @@ New-AzResourceGroup -Name $1ResourceGroupName -Location $1Location
 # Crea el objeto de usuario
 $1cred = Get-Credential -Message "Introduce el usuario y la contraseña para la máquina virtual."
 
-# LOOP
+# LOOP creación de máquinas virtuales
 
 while ($i -lt 2)
 {
   $i++
   # Crea la máquina virtual
+
+  Write-Host "Instalación VM iniciándose" -ForegroundColor DarkGreen -BackgroundColor Black
+
   New-AzVM `
     -ResourceGroupName $1ResourceGroupName `
     -Name $1vmName+$i `
@@ -35,13 +38,15 @@ while ($i -lt 2)
     -Size $1Size `
     -OpenPorts 80
 
-    # Instalación IIS
+  Write-Host "Instalación VM finalizada" -ForegroundColor DarkGreen -BackgroundColor Black
 
-    Write-Host "Instalación Servidor IIS" -ForegroundColor DarkGreen -BackgroundColor Black
+  # Instalación IIS
 
-    $1PublicSettings = '{"ModulesURL":"https://github.com/lilwhite/Proyecto-MAT/raw/master/Ejercicio-2/WebEmpresa.ps1.zip", "configurationFunction": "WebEmpresa.ps1\\WebEmpresa", "Properties": {"MachineName": '+'"'+$1vmName+$i+'"'+'} }'
+  Write-Host "Instalación Servidor IIS iniciándose" -ForegroundColor DarkGreen -BackgroundColor Black
 
-    Set-AzVMExtension `
+  $1PublicSettings = '{"ModulesURL":"https://github.com/lilwhite/Proyecto-MAT/raw/master/Ejercicio-2/WebEmpresa.ps1.zip", "configurationFunction": "WebEmpresa.ps1\\WebEmpresa", "Properties": {"MachineName": '+'"'+$1vmName+$i+'"'+'} }'
+
+  Set-AzVMExtension `
     -ExtensionName "DSC" `
     -ResourceGroupName $1ResourceGroupName `
     -VMName $1vmName `
@@ -50,4 +55,6 @@ while ($i -lt 2)
     -TypeHandlerVersion 2.7 `
     -SettingString $1PublicSettings `
     -Location $1Location
+
+  Write-Host "Instalación Servidor IIS completada" -ForegroundColor DarkGreen -BackgroundColor Black
 }
