@@ -19,47 +19,47 @@ $1cred = Get-Credential -Message "Introduce el usuario y la contraseña para la 
 # LOOP creación de máquinas virtuales
 
 while ($i -lt 2)
-{
-  $i++
-  # Crea la máquina virtual
+  {
+    $i++
+    # Crea la máquina virtual
 
-  Write-Host "Instalación VM iniciándose" -ForegroundColor DarkGreen -BackgroundColor Black
+    Write-Host "Instalación VM iniciándose" -ForegroundColor DarkGreen -BackgroundColor Black
 
-  $2vmName = $1vmName + $i
-  $2VirtualNetworkName = $1VirtualNetworkName + $i
-  $2SubnetName = $1SubnetName + $i
-  $2PublicIpAddressName = $1PublicIpAddressName + $i
+    $2vmName = $1vmName + $i
+    $2VirtualNetworkName = $1VirtualNetworkName + $i
+    $2SubnetName = $1SubnetName + $i
+    $2PublicIpAddressName = $1PublicIpAddressName + $i
 
-  New-AzVM `
-    -ResourceGroupName $1ResourceGroupName `
-    -Name $2vmName `
-    -Location $1location `
-    -ImageName $1ImageName `
-    -VirtualNetworkName $2VirtualNetworkName `
-    -SubnetName $2SubnetName `
-    -SecurityGroupName $1SecurityGroupName `
-    -PublicIpAddressName $2PublicIpAddressName `
-    -Credential $1cred `
-    -Size $1Size `
-    -OpenPorts 80
+    New-AzVM `
+      -ResourceGroupName $1ResourceGroupName `
+      -Name $2vmName `
+      -Location $1location `
+      -ImageName $1ImageName `
+      -VirtualNetworkName $2VirtualNetworkName `
+      -SubnetName $2SubnetName `
+      -SecurityGroupName $1SecurityGroupName `
+      -PublicIpAddressName $2PublicIpAddressName `
+      -Credential $1cred `
+      -Size $1Size `
+      -OpenPorts 80
 
-  Write-Host "Instalación VM finalizada" -ForegroundColor DarkGreen -BackgroundColor Black
+    Write-Host "Instalación VM finalizada" -ForegroundColor DarkGreen -BackgroundColor Black
 
-  # Instalación IIS
+    # Instalación IIS
 
-  Write-Host "Instalación Servidor IIS iniciándose" -ForegroundColor DarkGreen -BackgroundColor Black
+    Write-Host "Instalación Servidor IIS iniciándose" -ForegroundColor DarkGreen -BackgroundColor Black
 
-  $1PublicSettings = '{"ModulesURL":"https://github.com/lilwhite/Proyecto-MAT/raw/master/Ejercicio-2/WebEmpresa.ps1.zip", "configurationFunction": "WebEmpresa.ps1\\WebEmpresa", "Properties": {"MachineName": '+'"'+$2vmName+'"'+'} }'
+    $1PublicSettings = '{"ModulesURL":"https://github.com/lilwhite/Proyecto-MAT/raw/master/Ejercicio-2/WebEmpresa.ps1.zip", "configurationFunction": "WebEmpresa.ps1\\WebEmpresa", "Properties": {"MachineName": '+'"'+$2vmName+'"'+'} }'
 
-  Set-AzVMExtension `
-    -ExtensionName "DSC" `
-    -ResourceGroupName $1ResourceGroupName `
-    -VMName $2vmName `
-    -Publisher "Microsoft.Powershell" `
-    -ExtensionType "DSC" `
-    -TypeHandlerVersion 2.7 `
-    -SettingString $1PublicSettings `
-    -Location $1Location
+    Set-AzVMExtension `
+      -ExtensionName "DSC" `
+      -ResourceGroupName $1ResourceGroupName `
+      -VMName $2vmName `
+      -Publisher "Microsoft.Powershell" `
+      -ExtensionType "DSC" `
+      -TypeHandlerVersion 2.7 `
+      -SettingString $1PublicSettings `
+      -Location $1Location
 
-  Write-Host "Instalación Servidor IIS completada" -ForegroundColor DarkGreen -BackgroundColor Black
-}
+    Write-Host "Instalación Servidor IIS completada" -ForegroundColor DarkGreen -BackgroundColor Black
+  }
