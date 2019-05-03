@@ -32,21 +32,13 @@ New-AzVM `
 
 # Instalación Web-Management-Service
 
-Write-Host "Instalación Web-Management-Service" -ForegrundColor DarkGreen -BackgroundColor Black
+Write-Host "Instalación Web-Management-Service" -ForegroundColor DarkGreen -BackgroundColor Black
 
-$1SettingsString = 'Install-WindowsFeature Web-Management-Service'
-
-Set-AzVMExtension `
-  -ResourceGroupName $1ResourceGroupName `
-  -Location $1Location `
-  -VMName $1vmName `
-  -Name "CustomScriptExtension" `
-  -Publisher "MAT.Compute" `
-  -Type "CustomScriptExtension" `
-  -TypeHandlerVersion "1.0" `
-  -SettingString $1SettingsString
+Invoke-AzVMRunCommand -ResourceGroupName $1ResourceGroupName -Name $1vmName -CommandId 'RunPowerShellScript' -ScriptPath 'https://raw.githubusercontent.com/lilwhite/Proyecto-MAT/master/Ejercicio-2/CustomScript.ps1'
 
 # Instalación IIS
+
+Write-Host "Instalación Servidor IIS" -ForegroundColor DarkGreen -BackgroundColor Black
 
 $1PublicSettings = '{"ModulesURL":"https://github.com/lilwhite/Proyecto-MAT/raw/master/Ejercicio-2/WebEmpresa.ps1.zip", "configurationFunction": "WebEmpresa.ps1\\WebEmpresa", "Properties": {"MachineName": '+'"'+$1vmName+'"'+'} }'
 
