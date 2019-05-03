@@ -30,12 +30,6 @@ New-AzVM `
   -Size $1Size `
   -OpenPorts 80
 
-# Instalación Web-Management-Service
-
-Write-Host "Instalación Web-Management-Service" -ForegroundColor DarkGreen -BackgroundColor Black
-
-Invoke-AzVMRunCommand -ResourceGroupName $1ResourceGroupName -Name $1vmName -CommandId 'RunPowerShellScript' -ScriptPath 'https://raw.githubusercontent.com/lilwhite/Proyecto-MAT/master/Ejercicio-2/CustomScript.ps1'
-
 # Instalación IIS
 
 Write-Host "Instalación Servidor IIS" -ForegroundColor DarkGreen -BackgroundColor Black
