@@ -27,13 +27,13 @@ while ($i -lt 2)
 
   New-AzVM `
     -ResourceGroupName $1ResourceGroupName `
-    -Name $1vmName+$i `
+    -Name $1vmName$i `
     -Location $1location `
     -ImageName $1ImageName `
-    -VirtualNetworkName $1VirtualNetworkName+$i `
-    -SubnetName $1SubnetName+$i `
+    -VirtualNetworkName $1VirtualNetworkName$i `
+    -SubnetName $1SubnetName$i `
     -SecurityGroupName $1SecurityGroupName `
-    -PublicIpAddressName $1PublicIpAddressName+$i `
+    -PublicIpAddressName $1PublicIpAddressName$i `
     -Credential $1cred `
     -Size $1Size `
     -OpenPorts 80
@@ -44,12 +44,12 @@ while ($i -lt 2)
 
   Write-Host "Instalación Servidor IIS iniciándose" -ForegroundColor DarkGreen -BackgroundColor Black
 
-  $1PublicSettings = '{"ModulesURL":"https://github.com/lilwhite/Proyecto-MAT/raw/master/Ejercicio-2/WebEmpresa.ps1.zip", "configurationFunction": "WebEmpresa.ps1\\WebEmpresa", "Properties": {"MachineName": '+'"'+$1vmName+$i+'"'+'} }'
+  $1PublicSettings = '{"ModulesURL":"https://github.com/lilwhite/Proyecto-MAT/raw/master/Ejercicio-2/WebEmpresa.ps1.zip", "configurationFunction": "WebEmpresa.ps1\\WebEmpresa", "Properties": {"MachineName": '+'"'+$1vmName$i+'"'+'} }'
 
   Set-AzVMExtension `
     -ExtensionName "DSC" `
     -ResourceGroupName $1ResourceGroupName `
-    -VMName $1vmName `
+    -VMName $1vmName$i `
     -Publisher "Microsoft.Powershell" `
     -ExtensionType "DSC" `
     -TypeHandlerVersion 2.7 `
