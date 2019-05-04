@@ -53,8 +53,9 @@ Write-Host "Creacion de sonda de estado" -ForegroundColor DarkGreen -BackgroundC
 Add-AzLoadBalancerProbeConfig `
   -Name "Hubble" `
   -LoadBalancer $1lb `
-  -Protocol tcp `
+  -Protocol http `
   -Port 80 `
+  -RequestPath / `
   -IntervalInSeconds 15 `
   -ProbeCount 3
 
