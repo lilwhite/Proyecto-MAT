@@ -1,6 +1,8 @@
 <h1>Proyecto MAT</h1>
 
-<a data-flickr-embed="true"  href="https://www.flickr.com/photos/141549114@N03/46851389975/in/album-72157691253350433/" title="MAT_logo"><img src="https://live.staticflickr.com/65535/46851389975_c77e07b157_n.jpg" width="320" height="320" alt="MAT_logo"></a>
+<p align="center">
+  <img src="https://live.staticflickr.com/65535/46851389975_c77e07b157_n.jpg" width="300" height="300" alt="MAT_logo">
+</p>
 
 <p>La empresa MAT está planteando la migración de una parte de su arquitectura a Microsoft Azure.
   Ha planificado desplegar en Azure las cargas de trabajo que requieren más recursos y mantener
