@@ -1,14 +1,15 @@
 Configuration WebEmpresa
 {
-  param ($MachineName)
+  param ()
 
-  Node $MachineName
+  Node 'localhost'
   {
     #Install the IIS Role
     WindowsFeature IIS
     {
       Ensure = "Present"
       Name = "Web-Server"
+      IncludeAllSubFeature = $true
     }
     #Install ASP.NET 4.5
     WindowsFeature ASP
@@ -17,6 +18,6 @@ Configuration WebEmpresa
       Name = "Web-Asp-Net45"
     }
 
-     
+
   }
-} 
+}
