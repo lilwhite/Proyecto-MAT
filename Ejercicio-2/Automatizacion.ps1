@@ -46,9 +46,9 @@ param(
     [string] $AzureEnvironment = 'AzureCloud',
 
     [bool] $Login = $true,
-    
+
     [string] $ModuleVersionOverrides = $null,
-    
+
     [string] $PsGalleryApiUrl = 'https://www.powershellgallery.com/api/v2'
 )
 
@@ -91,7 +91,7 @@ function Login-AzureAutomation {
             -CertificateThumbprint $RunAsConnection.CertificateThumbprint `
             -Environment $AzureEnvironment
 
-        Select-AzureRmSubscription -SubscriptionId $RunAsConnection.SubscriptionID  | Write-Verbose
+        Select-AzureRmSubscription -SubscriptionId $RunAsConnection.SubscriptionID  | # Write-Verbose
     } catch {
         if (!$RunAsConnection) {
             Write-Output $servicePrincipalConnection
@@ -108,7 +108,7 @@ function Login-AzureAutomation {
 function Get-ModuleDependencyAndLatestVersion([string] $ModuleName) {
 
     $ModuleUrlFormat = "$PsGalleryApiUrl/Search()?`$filter={1}&searchTerm=%27{0}%27&targetFramework=%27%27&includePrerelease=false&`$skip=0&`$top=40"
-        
+
     $ForcedModuleVersion = $ModuleVersionOverridesHashTable[$ModuleName]
 
     $CurrentModuleUrl =
@@ -121,14 +121,14 @@ function Get-ModuleDependencyAndLatestVersion([string] $ModuleName) {
     $SearchResult = Invoke-RestMethod -Method Get -Uri $CurrentModuleUrl -UseBasicParsing
 
     if (!$SearchResult) {
-        Write-Verbose "Could not find module $ModuleName on PowerShell Gallery. This may be a module you imported from a different location. Ignoring this module"
+        # Write-Verbose "Could not find module $ModuleName on PowerShell Gallery. This may be a module you imported from a different location. Ignoring this module"
     } else {
         if ($SearchResult.Length -and $SearchResult.Length -gt 1) {
             $SearchResult = $SearchResult | Where-Object { $_.title.InnerText -eq $ModuleName }
         }
 
         if (!$SearchResult) {
-            Write-Verbose "Could not find module $ModuleName on PowerShell Gallery. This may be a module you imported from a different location. Ignoring this module"
+            # Write-Verbose "Could not find module $ModuleName on PowerShell Gallery. This may be a module you imported from a different location. Ignoring this module"
         } else {
             $PackageDetails = Invoke-RestMethod -Method Get -UseBasicParsing -Uri $SearchResult.id
 
@@ -165,7 +165,7 @@ function Import-AutomationModule([string] $ModuleName) {
     $ModuleContentUrl = Get-ModuleContentUrl $ModuleName
     # Find the actual blob storage location of the module
     do {
-        $ModuleContentUrl = (Invoke-WebRequest -Uri $ModuleContentUrl -MaximumRedirection 0 -UseBasicParsing -ErrorAction Ignore).Headers.Location 
+        $ModuleContentUrl = (Invoke-WebRequest -Uri $ModuleContentUrl -MaximumRedirection 0 -UseBasicParsing -ErrorAction Ignore).Headers.Location
     } while (!$ModuleContentUrl.Contains(".nupkg"))
 
     $CurrentModule = Get-AzureRmAutomationModule `
@@ -222,14 +222,14 @@ function AreAllModulesAdded([string[]] $ModuleListToAdd) {
         # the ':' character. The explicit intent of this runbook is to always install the latest module versions,
         # so we want to completely ignore version specifications here.
         $ModuleNameToAdd = $ModuleToAdd -replace '\:.*', ''
-            
+
         foreach($AlreadyIncludedModules in $ModuleImportMapOrder) {
             if ($AlreadyIncludedModules -contains $ModuleNameToAdd) {
                 $ModuleAccounted = $true
                 break
             }
         }
-        
+
         if (!$ModuleAccounted) {
             $Result = $false
             break
@@ -242,7 +242,7 @@ function AreAllModulesAdded([string[]] $ModuleListToAdd) {
 # Creates a module import map. This is a 2D array of strings so that the first
 # element in the array consist of modules with no dependencies.
 # The second element only depends on the modules in the first element, the
-# third element only dependes on modules in the first and second and so on. 
+# third element only dependes on modules in the first and second and so on.
 function Create-ModuleImportMapOrder {
     $ModuleImportMapOrder = $null
     # Get the latest version of the AzureRM.Profile module
@@ -260,10 +260,10 @@ function Create-ModuleImportMapOrder {
     do {
         $NextAutomationModuleList = $null
         $CurrentChainVersion = $null
-        # Add it to the list if the modules are not available in the same list 
+        # Add it to the list if the modules are not available in the same list
         foreach ($Module in $CurrentAutomationModuleList) {
             $Name = $Module.Name
-            Write-Verbose "Checking dependencies for $Name"
+            # Write-Verbose "Checking dependencies for $Name"
             $VersionAndDependencies = Get-ModuleDependencyAndLatestVersion $Module.Name
             if ($null -eq $VersionAndDependencies) {
                 continue
@@ -275,12 +275,12 @@ function Create-ModuleImportMapOrder {
 
             # If the previous list contains all the dependencies then add it to current list
             if ((-not $Dependencies) -or (AreAllModulesAdded $Dependencies)) {
-                Write-Verbose "Adding module $Name to dependency chain"
+                # Write-Verbose "Adding module $Name to dependency chain"
                 $CurrentChainVersion += ,$AzureModuleEntry
             } else {
                 # else add it back to the main loop variable list if not already added
                 if (!(AreAllModulesAdded $AzureModuleEntry)) {
-                    Write-Verbose "Module $Name does not have all dependencies added as yet. Moving module for later import"
+                    # Write-Verbose "Module $Name does not have all dependencies added as yet. Moving module for later import"
                     $NextAutomationModuleList += ,$Module
                 }
             }
@@ -319,19 +319,19 @@ function Wait-AllModulesImported(
                 break
             }
 
-            Write-Verbose ("Module {0} is getting imported" -f $Module)
+            # Write-Verbose ("Module {0} is getting imported" -f $Module)
             Start-Sleep -Seconds 30
         }
 
         if ($AutomationModule.ProvisioningState -ne "Succeeded") {
-            Write-Error ("Failed to import module : {0}. Status : {1}" -f $Module, $AutomationModule.ProvisioningState)                
+            Write-Error ("Failed to import module : {0}. Status : {1}" -f $Module, $AutomationModule.ProvisioningState)
         } else {
             Write-Output ("Successfully imported module : {0}" -f $Module)
         }
-    }               
+    }
 }
 
-# Uses the module import map created to import modules. 
+# Uses the module import map created to import modules.
 # It will only import modules from an element in the array if all the modules
 # from the previous element have been added.
 function Import-ModulesInAutomationAccordingToDependency([string[][]] $ModuleImportMapOrder) {
@@ -340,7 +340,7 @@ function Import-ModulesInAutomationAccordingToDependency([string[][]] $ModuleImp
         $i = 0
         Write-Output "Importing Array of modules : $ModuleList"
         foreach ($Module in $ModuleList) {
-            Write-Verbose ("Importing module : {0}" -f $Module)
+            # Write-Verbose ("Importing module : {0}" -f $Module)
             Import-AutomationModule -ModuleName $Module
             $i++
             if ($i % $SimultaneousModuleImportJobCount -eq 0) {
@@ -359,7 +359,7 @@ function Import-ModulesInAutomationAccordingToDependency([string[][]] $ModuleImp
 }
 
 function Update-ProfileAndAutomationVersionToLatest {
-    # Get the latest azure automation module version 
+    # Get the latest azure automation module version
     $VersionAndDependencies = Get-ModuleDependencyAndLatestVersion $script:AzureRMAutomationModuleName
 
     # Automation only has dependency on profile
@@ -407,38 +407,47 @@ if ($ModuleVersionOverrides) {
 }
 
 # Import the latest version of the Azure automation and profile version to the local sandbox
-Update-ProfileAndAutomationVersionToLatest 
+Update-ProfileAndAutomationVersionToLatest
 
 if ($Login) {
     Login-AzureAutomation
 }
 
 $ModuleImportMapOrder = Create-ModuleImportMapOrder
-Import-ModulesInAutomationAccordingToDependency $ModuleImportMapOrder 
+Import-ModulesInAutomationAccordingToDependency $ModuleImportMapOrder
 
 #endregion
 
-$1publica = Get-AzureRmPublicIpAddress -Name "WebEmpresaIP" -ResourceGroupName "03-WebEmpresa"
+# Final Script
 
-$2publica = $1publica.IpAddress
+$User = "******@******.onmicrosoft.com"
+$PWord = ConvertTo-SecureString -String '*****' -AsPlainText -Force
+$Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $User, $PWord
+
+# $1publica = Get-AzureRmPublicIpAddress -Name "WebEmpresaIP" -ResourceGroupName "03-WebEmpresa"
+
+# $2publica = $1publica.IpAddress
 
 $WebServer = Invoke-WebRequest "http://$2publica" -UseBasicParsing
 
 $Estado = $WebServer.StatusCode
 
+# AzureDiagnostics | where ResourceProvider == "MICROSOFT.AUTOMATION"
 
 if ($Estado -eq 200){
-        Write-Host "STATUS OK"
+        Write-Output "STATUS OK"
+        Write-Verbose "STATUS OK"
+        exit 0
         }
 
 else {
-   
-        $User = "mario.blanco@matt38w03.onmicrosoft.com"
-        $PWord = ConvertTo-SecureString -String '*****' -AsPlainText -Force
-        $Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $User, $PWord
+
+
 
         Connect-AzureRmAccount -Credential $Credential
 
         Restart-AzureRmVM -ResourceGroupName "03-WebEmpresa" -Name "WebEmpresa1"
         Restart-AzureRmVM -ResourceGroupName "03-WebEmpresa" -Name "WebEmpresa2"
+        Write-Output "Maquinas reiniciadas"
+        exit 1
 }
