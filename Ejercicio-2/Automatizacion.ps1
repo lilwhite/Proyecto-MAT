@@ -91,7 +91,7 @@ function Login-AzureAutomation {
             -CertificateThumbprint $RunAsConnection.CertificateThumbprint `
             -Environment $AzureEnvironment
 
-        Select-AzureRmSubscription -SubscriptionId $RunAsConnection.SubscriptionID  | # Write-Verbose
+        Select-AzureRmSubscription -SubscriptionId $RunAsConnection.SubscriptionID  | Write-Verbose
     } catch {
         if (!$RunAsConnection) {
             Write-Output $servicePrincipalConnection
@@ -121,14 +121,14 @@ function Get-ModuleDependencyAndLatestVersion([string] $ModuleName) {
     $SearchResult = Invoke-RestMethod -Method Get -Uri $CurrentModuleUrl -UseBasicParsing
 
     if (!$SearchResult) {
-        # Write-Verbose "Could not find module $ModuleName on PowerShell Gallery. This may be a module you imported from a different location. Ignoring this module"
+        Write-Verbose "Could not find module $ModuleName on PowerShell Gallery. This may be a module you imported from a different location. Ignoring this module"
     } else {
         if ($SearchResult.Length -and $SearchResult.Length -gt 1) {
             $SearchResult = $SearchResult | Where-Object { $_.title.InnerText -eq $ModuleName }
         }
 
         if (!$SearchResult) {
-            # Write-Verbose "Could not find module $ModuleName on PowerShell Gallery. This may be a module you imported from a different location. Ignoring this module"
+            Write-Verbose "Could not find module $ModuleName on PowerShell Gallery. This may be a module you imported from a different location. Ignoring this module"
         } else {
             $PackageDetails = Invoke-RestMethod -Method Get -UseBasicParsing -Uri $SearchResult.id
 
@@ -263,7 +263,7 @@ function Create-ModuleImportMapOrder {
         # Add it to the list if the modules are not available in the same list
         foreach ($Module in $CurrentAutomationModuleList) {
             $Name = $Module.Name
-            # Write-Verbose "Checking dependencies for $Name"
+            Write-Verbose "Checking dependencies for $Name"
             $VersionAndDependencies = Get-ModuleDependencyAndLatestVersion $Module.Name
             if ($null -eq $VersionAndDependencies) {
                 continue
@@ -275,12 +275,12 @@ function Create-ModuleImportMapOrder {
 
             # If the previous list contains all the dependencies then add it to current list
             if ((-not $Dependencies) -or (AreAllModulesAdded $Dependencies)) {
-                # Write-Verbose "Adding module $Name to dependency chain"
+                Write-Verbose "Adding module $Name to dependency chain"
                 $CurrentChainVersion += ,$AzureModuleEntry
             } else {
                 # else add it back to the main loop variable list if not already added
                 if (!(AreAllModulesAdded $AzureModuleEntry)) {
-                    # Write-Verbose "Module $Name does not have all dependencies added as yet. Moving module for later import"
+                    Write-Verbose "Module $Name does not have all dependencies added as yet. Moving module for later import"
                     $NextAutomationModuleList += ,$Module
                 }
             }
@@ -319,7 +319,7 @@ function Wait-AllModulesImported(
                 break
             }
 
-            # Write-Verbose ("Module {0} is getting imported" -f $Module)
+            Write-Verbose ("Module {0} is getting imported" -f $Module)
             Start-Sleep -Seconds 30
         }
 
@@ -340,7 +340,7 @@ function Import-ModulesInAutomationAccordingToDependency([string[][]] $ModuleImp
         $i = 0
         Write-Output "Importing Array of modules : $ModuleList"
         foreach ($Module in $ModuleList) {
-            # Write-Verbose ("Importing module : {0}" -f $Module)
+            Write-Verbose ("Importing module : {0}" -f $Module)
             Import-AutomationModule -ModuleName $Module
             $i++
             if ($i % $SimultaneousModuleImportJobCount -eq 0) {
