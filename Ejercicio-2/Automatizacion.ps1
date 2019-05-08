@@ -434,7 +434,7 @@ if ($Estado -eq 200){
 else {
    
         $User = "mario.blanco@matt38w03.onmicrosoft.com"
-        $PWord = ConvertTo-SecureString -String 'Jalisco99' -AsPlainText -Force
+        $PWord = ConvertTo-SecureString -String '*****' -AsPlainText -Force
         $Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $User, $PWord
 
         Connect-AzureRmAccount -Credential $Credential
