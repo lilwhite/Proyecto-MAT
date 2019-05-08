@@ -6,28 +6,20 @@ Licensed under the MIT License.
 <#
 .SYNOPSIS
 Update Azure PowerShell modules in an Azure Automation account.
-
 .DESCRIPTION
 This Azure Automation runbook updates Azure PowerShell modules imported into an
 Azure Automation account with the module versions published to the PowerShell Gallery.
-
 Prerequisite: an Azure Automation account with an Azure Run As account credential.
-
 .PARAMETER ResourceGroupName
 The Azure resource group name.
-
 .PARAMETER AutomationAccountName
 The Azure Automation account name.
-
 .PARAMETER SimultaneousModuleImportJobCount
 (Optional) The maximum number of module import jobs allowed to run concurrently.
-
 .PARAMETER AzureEnvironment
 (Optional) Azure environment name.
-
 .PARAMETER Login
 (Optional) If $false, do not login to Azure.
-
 .PARAMETER ModuleVersionOverrides
 (Optional) Module versions to use instead of the latest on the PowerShell Gallery.
 If $null, the currently published latest versions will be used.
@@ -35,10 +27,8 @@ If not $null, must contain a JSON-serialized dictionary, for example:
     '{ "AzureRM.Compute": "5.8.0", "AzureRM.Network": "6.10.0" }'
 or
     @{ 'AzureRM.Compute'='5.8.0'; 'AzureRM.Network'='6.10.0' } | ConvertTo-Json
-
 .PARAMETER PsGalleryApiUrl
 (Optional) PowerShell Gallery API URL.
-
 .LINK
 https://docs.microsoft.com/en-us/azure/automation/automation-update-azure-modules
 #>
@@ -428,8 +418,11 @@ Import-ModulesInAutomationAccordingToDependency $ModuleImportMapOrder
 
 #endregion
 
+$1publica = Get-AzureRmPublicIpAddress -Name "WebEmpresaIP" -ResourceGroupName "03-WebEmpresa"
 
-$WebServer = Invoke-WebRequest http://40.114.25.155 -UseBasicParsing
+$2publica = $1publica.IpAddress
+
+$WebServer = Invoke-WebRequest "http://$2publica" -UseBasicParsing
 
 $Estado = $WebServer.StatusCode
 
@@ -440,6 +433,12 @@ if ($Estado -eq 200){
 
 else {
    
-   Restart-AzureRmVM -ResourceGroupName "03-WebEmpresa" -Name "WebEmpresa1"
-   Restart-AzureRmVM -ResourceGroupName "03-WebEmpresa" -Name "WebEmpresa2"
+        $User = "mario.blanco@matt38w03.onmicrosoft.com"
+        $PWord = ConvertTo-SecureString -String 'Jalisco99' -AsPlainText -Force
+        $Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $User, $PWord
+
+        Connect-AzureRmAccount -Credential $Credential
+
+        Restart-AzureRmVM -ResourceGroupName "03-WebEmpresa" -Name "WebEmpresa1"
+        Restart-AzureRmVM -ResourceGroupName "03-WebEmpresa" -Name "WebEmpresa2"
 }
