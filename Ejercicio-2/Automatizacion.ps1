@@ -464,7 +464,9 @@ else {
             $restart3 = Restart-AzureRmVM -ResourceGroupName "03-WebEmpresa" -Name "WebEmpresa1"
             $restart4 = Restart-AzureRmVM -ResourceGroupName "03-WebEmpresa" -Name "WebEmpresa2"
 
-          }While (($restart3.Status -and $restart4.Status -ne "Succeeded") -or ($i -le 3))
+            $variable = $restart3.status -and $restart4.status
+
+          }While (($variable = $false) -or ($i -le 3))
 
           if (($restart3.Status -and $restart4.Status -ne "Succeeded"){
 
