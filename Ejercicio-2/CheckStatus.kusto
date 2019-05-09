@@ -1,0 +1,3 @@
+AzureDiagnostics | where ResourceProvider == "MICROSOFT.AUTOMATION"
+| where StreamType_s == "Output"
+| where ResultDescription == "STATUS NOK" 
