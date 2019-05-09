@@ -441,11 +441,13 @@ $Estado = $WebServer.StatusCode
 if ($Estado -eq 200){
 
         Write-Output "STATUS OK"
-        
+
         exit 0
         }
 
 else {
+
+        Write-Output "STATUS KO Reiniciando Maquinas"
 
         $restart1 = Restart-AzureRmVM -ResourceGroupName "03-WebEmpresa" -Name "WebEmpresa1"
         $restart2 = Restart-AzureRmVM -ResourceGroupName "03-WebEmpresa" -Name "WebEmpresa2"
