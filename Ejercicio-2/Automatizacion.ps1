@@ -420,9 +420,13 @@ Import-ModulesInAutomationAccordingToDependency $ModuleImportMapOrder
 
 # Final Script
 
+# AzureDiagnostics | where ResourceProvider == "MICROSOFT.AUTOMATION"
+
 $User = "******@******.onmicrosoft.com"
 $PWord = ConvertTo-SecureString -String '*****' -AsPlainText -Force
 $Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $User, $PWord
+
+Connect-AzureRmAccount -Credential $Credential
 
 # $1publica = Get-AzureRmPublicIpAddress -Name "WebEmpresaIP" -ResourceGroupName "03-WebEmpresa"
 
@@ -442,12 +446,45 @@ if ($Estado -eq 200){
 
 else {
 
+        $restart1 = Restart-AzureRmVM -ResourceGroupName "03-WebEmpresa" -Name "WebEmpresa1"
+        $restart2 = Restart-AzureRmVM -ResourceGroupName "03-WebEmpresa" -Name "WebEmpresa2"
+
+        if ($restart1.Status -and $restart2.Status -eq "Succeeded"){
+
+            Write-Output "Maquinas reiniciadas"
+
+            exit 1
+        }
+
+        else {
+          $i = 1
+          DO
+          {
+            $i++
+            $restart3 = Restart-AzureRmVM -ResourceGroupName "03-WebEmpresa" -Name "WebEmpresa1"
+            $restart4 = Restart-AzureRmVM -ResourceGroupName "03-WebEmpresa" -Name "WebEmpresa2"
+
+          }While (($restart3.Status -and $restart4.Status -ne "Succeeded") -or ($i -le 3))
+
+          if (($restart3.Status -and $restart4.Status -ne "Succeeded"){
+
+            Write-Output "STATUS NOK"
+
+            exit 2
+          }
+
+          else{
+
+            Write-Output "Maquinas reiniciadas REVISAR"
+
+            exit 3
+
+          }
+
+        }
 
 
-        Connect-AzureRmAccount -Credential $Credential
 
-        Restart-AzureRmVM -ResourceGroupName "03-WebEmpresa" -Name "WebEmpresa1"
-        Restart-AzureRmVM -ResourceGroupName "03-WebEmpresa" -Name "WebEmpresa2"
-        Write-Output "Maquinas reiniciadas"
-        exit 1
+
+
 }
