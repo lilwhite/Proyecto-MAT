@@ -449,7 +449,7 @@ else {
         $restart1 = Restart-AzureRmVM -ResourceGroupName "03-WebEmpresa" -Name "WebEmpresa1"
         $restart2 = Restart-AzureRmVM -ResourceGroupName "03-WebEmpresa" -Name "WebEmpresa2"
 
-        if ($restart1.Status -and $restart2.Status -eq "Succeeded"){
+        if (($restart1.Status -eq "Succeeded") -and ($restart2.Status -eq "Succeeded")){
 
             Write-Output "Maquinas reiniciadas"
 
@@ -464,11 +464,9 @@ else {
             $restart3 = Restart-AzureRmVM -ResourceGroupName "03-WebEmpresa" -Name "WebEmpresa1"
             $restart4 = Restart-AzureRmVM -ResourceGroupName "03-WebEmpresa" -Name "WebEmpresa2"
 
-            $variable = $restart3.status -and $restart4.status
+          }While (($restart3.Status -ne "Succeeded") -or ($restart2.Status -ne "Succeeded") -or ($i -le 3))
 
-          }While (($variable = $false) -or ($i -le 3))
-
-          if (($restart3.Status -and $restart4.Status -ne "Succeeded"){
+          if (($restart3.Status -ne "Succeeded") -or ($restart2.Status -ne "Succeeded")){
 
             Write-Output "STATUS NOK"
 
