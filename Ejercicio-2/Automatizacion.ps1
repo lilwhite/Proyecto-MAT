@@ -439,8 +439,9 @@ $Estado = $WebServer.StatusCode
 # AzureDiagnostics | where ResourceProvider == "MICROSOFT.AUTOMATION"
 
 if ($Estado -eq 200){
+
         Write-Output "STATUS OK"
-        Write-Verbose "STATUS OK"
+        
         exit 0
         }
 
