@@ -454,7 +454,7 @@ else {
 
         if (($restart1.Status -eq "Succeeded") -and ($restart2.Status -eq "Succeeded")){
 
-            Write-Output "Maquinas reiniciadas"
+             Write-Output "Maquinas reiniciadas"
 
             exit 1
         }
