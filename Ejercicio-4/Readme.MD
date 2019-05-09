@@ -3,3 +3,5 @@
 <p>En un futuro, el servicio web hará uso de una base de datos SQL. Debes implementar esta base de datos mediante Azure SQL Server (usar la base de datos de ejemplo AdventureWorks). Las únicas máquinas que deben acceder a esta base de datos deben ser las del servicio balanceado y la base de datos debe estar protegida mediante cifrado.</p>
 
 <p>Referencia de configuración servidor IIS https://www.assistanz.com/steps-to-configure-iis-server-core-for-remote-management/</p>
+
+<p>https://docs.microsoft.com/es-es/azure/sql-database/sql-database-single-database-get-started</p>
