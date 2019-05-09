@@ -9,7 +9,5 @@
   <li>sudo waagent -deprovision</li>
   <li>Paramos la máquina</li>
   <li>Una vez desasignada realizaremos la captura</li>
-  <li>Eliminaremos la maquina al crear la imagen</li>
-  <li>Eliminaremos la maquina al crear la imagen</li>
-  
+  <li>Eliminaremos la maquina al crear la imagen</li>  
 </ul>
