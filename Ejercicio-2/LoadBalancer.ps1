@@ -151,8 +151,8 @@ for ($i=1; $i -le 2; $i++)
       -OpenPorts 80
 
     Write-Host "Instalacion VM finalizada" -ForegroundColor DarkGreen -BackgroundColor Black
-
-    # Instalación IIS
+  }
+    <# Instalación IIS
 
     Write-Host "Instalacion Servidor IIS iniciandose" -ForegroundColor DarkGreen -BackgroundColor Black
 
@@ -169,4 +169,4 @@ for ($i=1; $i -le 2; $i++)
       -Location $1Location
 
     Write-Host "Instalacion Servidor IIS completada" -ForegroundColor DarkGreen -BackgroundColor Black
-  }
+  #>
