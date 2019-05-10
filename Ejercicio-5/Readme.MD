@@ -4,10 +4,12 @@
 
 
 <ul>
-  <li>Instalamos la máquina Ubuntu</li>
+  <li>Instalamos la máquina Ubuntu, con disco no gestionado</li>
   <li>apt-get install apache2</li>
   <li>sudo waagent -deprovision</li>
   <li>Paramos la máquina</li>
   <li>Una vez desasignada realizaremos la captura</li>
   <li>Eliminaremos la maquina al crear la imagen</li>  
 </ul>
+
+<p>https://github.com/Azure/azure-quickstart-templates/tree/master/201-vmss-linux-customimage-autoscale</p>
