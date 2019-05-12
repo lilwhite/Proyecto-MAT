@@ -371,5 +371,5 @@ Mediante la siguiente query nos mostrará el resultado de los estados OK:
 ```Kusto
 AzureDiagnostics | where ResourceProvider == "MICROSOFT.AUTOMATION"
 | where StreamType_s == "Output"
-| where ResultDescription == "STATUS NOK" 
+| where ResultDescription == "STATUS OK" 
 ```
