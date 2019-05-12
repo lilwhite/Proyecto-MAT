@@ -37,9 +37,18 @@ Nos conectamos mediante SSH una vez creada la máquina:
 Posteriormente ejecutaremos los siguientes comandos para actualizar la máquina, instalar apache, instalar las dependencias del agente de Log Analytics y crear la carpeta de instalación del agente:
 
 ```Bash
+#Actualización sistema
 sudo apt-get update
+
+#Instalación Apache
 sudo apt-get install apache2
+
+#Instalación dependencias
 sudo apt-get install auditd
+
+#Creación carpeta
 mkdir agente
+
+#Accedemos a la carpeta
 cd agente
 ```
