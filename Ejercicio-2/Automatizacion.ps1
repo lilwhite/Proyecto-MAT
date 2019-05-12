@@ -454,20 +454,18 @@ else {
 
         $Estado2 = $WebServer.StatusCode
 
-        If ($Estado2 -eq 200)
-        {
-          Write-Output "Servicio Reestablecido"
-
-          Exit 1
-
-        }
-
       }While(($Estado2 -eq 200)-or ($i -le 3))
 
-        if (($Estado2 -ne 200)){
+      If ($Estado2 -eq 200){
 
-          Write-Output "STATUS NOK"
+        Write-Output "Servicio Reestablecido"
 
-          Exit 2
-        }
+        Exit 1
+      }
+      else{
+
+        Write-Output "STATUS NOK"
+
+        Exit 2
+      }
 }
