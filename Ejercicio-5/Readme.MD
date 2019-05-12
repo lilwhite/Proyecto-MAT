@@ -82,6 +82,6 @@ Una vez parada, podemos proceder a eliminar todos los recursos a excepción de l
 
 ## Despliegue de Scale-Set
 
-<a href=https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Flilwhite%2FProyecto-MAT%2Fmaster%2FEjercicio-5%2ScaleSet.json rel="nofollow">
+<a href=https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Flilwhite%2FProyecto-MAT%2Fmaster%2FEjercicio-5%2FScaleSet.json rel="nofollow">
   <img src="https://live.staticflickr.com/65535/32892687807_70317bb54a_o.png" width="161" height="34" alt="boton">
 </a>
