@@ -1,4 +1,4 @@
-# Creación del equilibrador de carga de Azure
+# Creación del equilibrador de carga de Azure 
 # https://docs.microsoft.com/es-es/azure/virtual-machines/windows/tutorial-load-balancer
 
 $1ResourceGroupName = "03-WebEmpresa"
