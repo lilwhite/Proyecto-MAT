@@ -12,16 +12,33 @@ Primero procederemos a crear el Script para la creación de las dos máquinas vi
 
 * Creación de un nuevo grupo de recursos
 
-```Powershell
-  $1publicIP = New-AzPublicIpAddress `
-    -ResourceGroupName $1ResourceGroupName `
-    -Location $1Location `
-    -AllocationMethod "Static" `
-    -Name "WebEmpresaIP"
-  return true
+Aquí definiremos el nombre del grupo de recursos, y su localización:
+
+```PowerShell
+New-AzResourceGroup `
+  -ResourceGroupName $1ResourceGroupName `
+  -Location $1Location
 ```
 * Crear una dirección IP pública
+
+Asociaremos la IP pública al grupo de recursos creados:
+
+```PowerShell
+$1publicIP = New-AzPublicIpAddress `
+  -ResourceGroupName $1ResourceGroupName `
+  -Location $1Location `
+  -AllocationMethod "Static" `
+  -Name "WebEmpresaIP"
+```
+
 * Creación de un grupo de direcciones IP de front-end
+
+```PowerShell
+$1frontendIP = New-AzLoadBalancerFrontendIpConfig `
+  -Name "WebFrontEndPool" `
+  -PublicIpAddress $1publicIP
+```
+
 * Creación de un grupo de direcciones de back-end
 * Creación del balanceador de carga
 * Creación de un sondeo de estado
