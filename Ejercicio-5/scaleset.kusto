@@ -1,0 +1,7 @@
+// Uso de CPU de instancias en ScaleSet
+Perf
+| where ObjectName   == "Processor"
+| where CounterName == "% Processor Time"
+| where InstanceName == "_Total"
+| summarize avg(CounterValue) by Computer, bin(TimeGenerated, 1m)
+| render timechart 
