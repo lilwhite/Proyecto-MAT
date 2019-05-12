@@ -432,58 +432,48 @@ Connect-AzureRmAccount -Credential $Credential
 
 # $2publica = $1publica.IpAddress
 
-$WebServer = Invoke-WebRequest "http://$2publica" -UseBasicParsing
+$WebServer1 = Invoke-WebRequest "http://$2publica" -UseBasicParsing
 
-$Estado = $WebServer.StatusCode
+$Estado1 = $WebServer.StatusCode
 
 # AzureDiagnostics | where ResourceProvider == "MICROSOFT.AUTOMATION"
 
-if ($Estado -eq 200){
+if ($Estado1 -eq 200){
 
         Write-Output "STATUS OK"
 
         exit 0
-        }
+
+}
 
 else {
+      Write-Output "STATUS KO Reiniciando Maquinas"
 
-        Write-Output "STATUS KO Reiniciando Maquinas"
+      $i = 1
 
-        $restart1 = Restart-AzureRmVM -ResourceGroupName "03-WebEmpresa" -Name "WebEmpresa1"
-        $restart2 = Restart-AzureRmVM -ResourceGroupName "03-WebEmpresa" -Name "WebEmpresa2"
+      DO{
 
-        if (($restart1.Status -eq "Succeeded") -and ($restart2.Status -eq "Succeeded")){
+        $restart1 = Restart-AzureRmVM -ResourceGroupName "RG-WebEmpresa" -Name "WebEmpresa1"
+        $restart2 = Restart-AzureRmVM -ResourceGroupName "RG-WebEmpresa" -Name "WebEmpresa2"
 
-             Write-Output "Maquinas reiniciadas"
+        $WebServer2 = Invoke-WebRequest "http://$2publica"
 
-            exit 1
-        }
+        $Estado2 = $WebServer.StatusCode
 
-        else {
-          $i = 1
-          DO
-          {
-            $i++
-            $restart3 = Restart-AzureRmVM -ResourceGroupName "03-WebEmpresa" -Name "WebEmpresa1"
-            $restart4 = Restart-AzureRmVM -ResourceGroupName "03-WebEmpresa" -Name "WebEmpresa2"
+        If ($Estado2 -eq 200)
+        {
+          Write-Output "Servicio Reestablecido"
 
-          }While (($restart3.Status -ne "Succeeded") -or ($restart2.Status -ne "Succeeded") -or ($i -le 3))
-
-          if (($restart3.Status -ne "Succeeded") -or ($restart2.Status -ne "Succeeded")){
-
-            Write-Output "STATUS NOK"
-
-            exit 2
-          }
-
-          else{
-
-            Write-Output "Maquinas reiniciadas REVISAR"
-
-            exit 3
-
-          }
+          Exit 1
 
         }
 
+      }While(($Estado2 -eq 200)-or ($i -le 3))
+
+        if (($Estado2 -ne 200)){
+
+          Write-Output "STATUS NOK"
+
+          Exit 2
+        }
 }
