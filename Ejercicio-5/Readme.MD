@@ -20,6 +20,8 @@ Para el departamento de desarrollo, nos han encargado implementar un portal Web 
 
 ## Creación y configuración de máquina Ubuntu
 
+Como primer paso, deberemos de configurar una máquina Ubuntu, y desprovisionarla para dejarla como plantilla de creación de las instancias del scale set.
+
 <p align="center">
   <img src="https://live.staticflickr.com/65535/40868226613_7c3ec4e309_z.jpg" width="565" height="640" alt="Ubuntu">
 </p>
@@ -68,3 +70,14 @@ Y para dejar la máquina desprovisionada, ejecutaremos el siguiente comando:
 ```Bash
 sudo waagent -deprovision
 ```
+Paramos la máquina y esperamos a que se quede en estado **Stopped (deallocated)**:
+
+<p align="center">
+  <img src="https://live.staticflickr.com/65535/47783188422_94be4e4810_z.jpg" width="640" height="168" alt="Stopped">
+</p>
+
+Una vez parada, podemos proceder a eliminar todos los recursos a excepción de la cuenta de almacenamiento:
+
+<p align="center">
+  <img src="https://live.staticflickr.com/65535/47045728304_ba2fff639d_z.jpg" width="426" height="545" alt="Captura de pantalla 2019-05-12 a las 21.36.52">
+</p>
