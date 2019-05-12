@@ -11,6 +11,18 @@ Se nos solicita implementar un script de automatización que despliegue dos máq
 Primero procederemos a crear el Script para la creación de las dos máquinas virtuales. Mediante este script configuraremos los siguientes elementos:
 
 * Creación de un nuevo grupo de recursos
+
+
+
+$1publicIP = New-AzPublicIpAddress `
+  -ResourceGroupName $1ResourceGroupName `
+  -Location $1Location `
+  -AllocationMethod "Static" `
+  -Name "WebEmpresaIP"
+
+
+
+
 * Crear una dirección IP pública
 * Creación de un grupo de direcciones IP de front-end
 * Creación de un grupo de direcciones de back-end
