@@ -12,16 +12,16 @@ Primero procederemos a crear el Script para la creación de las dos máquinas vi
 
 * Creación de un nuevo grupo de recursos
 
-
-
-$1publicIP = New-AzPublicIpAddress `
-  -ResourceGroupName $1ResourceGroupName `
-  -Location $1Location `
-  -AllocationMethod "Static" `
-  -Name "WebEmpresaIP"
-
-
-
+```Powershell
+if (isAwesome){
+  $1publicIP = New-AzPublicIpAddress `
+    -ResourceGroupName $1ResourceGroupName `
+    -Location $1Location `
+    -AllocationMethod "Static" `
+    -Name "WebEmpresaIP"
+  return true
+}
+```
 
 * Crear una dirección IP pública
 * Creación de un grupo de direcciones IP de front-end
