@@ -12,6 +12,7 @@ Para el departamento de desarrollo, nos han encargado implementar un portal Web 
 * wget https://raw.githubusercontent.com/Microsoft/OMS-Agent-for-Linux/master/installer/scripts/onboard_agent.sh && sh onboard_agent.sh -w <YOUR WORKSPACE ID> -s <YOUR WORKSPACE PRIMARY KEY> -d opinsights.azure.us
 * sudo waagent -deprovision
 * Paramos la máquina
+* cat /dev/zero >/dev/null
 
 
 https://github.com/Azure/azure-quickstart-templates/tree/master/201-vmss-linux-customimage-autoscale
@@ -121,4 +122,10 @@ Para realizar las pruebas de rendiemto sobre las máquinas habilitaremos **Boot 
 
 <p align="center">
   <img src="https://live.staticflickr.com/65535/46920541205_71987bc5aa_o.png" width="855" height="378" alt="Upgrade">
+</p>
+
+Una vez actualizada ya podremos insertar el comando **cat /dev/zero >/dev/null** para que consuma recursos la máquina y obligarla a escalar.
+
+<p align="center">
+  <img src="https://live.staticflickr.com/65535/47784763492_e60f08c94b_o.png" width="810" height="336" alt="Consola">
 </p>
