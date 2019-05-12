@@ -3,20 +3,18 @@
 Para el departamento de desarrollo, nos han encargado implementar un portal Web a partir de una imagen de Ubuntu Server personalizada con Apache y usando una plantilla JSON. El portal debe desplegarse con un máximo de 3 instancias y un mínimo de 1. El escalado de la solución debe ser automático incrementándose en una instancia cuando el uso de CPU supere el 75% durante 5 minutos (este escalado deberá comprobarse forzando la CPU por encima de este valor). Del mismo modo, si el uso de CPU cae por debajo de un 25% durante 5 minutos, el número de instancias se reducirá en 1. Las instancias que estén en ejecución para el portal deben estar monitorizados usando Azure Log Analytics presentando el uso de CPU de forma gráfica en un dashboard, y debe llegar un correo electrónico a los administradores siempre que se escale el servicio, tanto añadiendo como eliminando instancias.
 
 
-<ul>
-  <li>Instalamos la máquina Ubuntu, con disco no gestionado</li>
-  <li>apt-get update</li>
-  <li>apt-get install apache2</li>
-  <li>apt-get install auditd</li>
-  <li>crearemos una carpeta para el agente</li>
-  <li>wget https://raw.githubusercontent.com/Microsoft/OMS-Agent-for-Linux/master/installer/scripts/onboard_agent.sh && sh onboard_agent.sh -w <YOUR WORKSPACE ID> -s <YOUR WORKSPACE PRIMARY KEY> -d opinsights.azure.us</li>
-  <li>sudo waagent -deprovision</li>
-  <li>Paramos la máquina</li>
-  <li>Una vez desasignada realizaremos la captura</li>
-  <li>Eliminaremos la maquina al crear la imagen</li>  
-</ul>
 
-<p>https://github.com/Azure/azure-quickstart-templates/tree/master/201-vmss-linux-customimage-autoscale</p>
+* Instalamos la máquina Ubuntu, con disco no gestionado
+* apt-get update
+* apt-get install apache2
+* apt-get install auditd
+* crearemos una carpeta para el agente
+* wget https://raw.githubusercontent.com/Microsoft/OMS-Agent-for-Linux/master/installer/scripts/onboard_agent.sh && sh onboard_agent.sh -w <YOUR WORKSPACE ID> -s <YOUR WORKSPACE PRIMARY KEY> -d opinsights.azure.us
+* sudo waagent -deprovision
+* Paramos la máquina
+
+
+https://github.com/Azure/azure-quickstart-templates/tree/master/201-vmss-linux-customimage-autoscale
 
 ## Creación y configuración de máquina Ubuntu
 
@@ -81,3 +79,10 @@ Una vez parada, podemos proceder a eliminar todos los recursos a excepción de l
 <p align="center">
   <img src="https://live.staticflickr.com/65535/47045728304_ba2fff639d_z.jpg" width="426" height="545" alt="Captura de pantalla 2019-05-12 a las 21.36.52">
 </p>
+
+## Despliegue de Scale-Set
+
+<a href=https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Flilwhite%2Proyecto-MAT%2Fmaster%2FEjercicio-5%2ScaleSet.json"
+
+<img src="https://live.staticflickr.com/65535/32892687807_70317bb54a_o.png" width="161" height="34" alt="boton">
+</a>
