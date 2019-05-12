@@ -265,8 +265,80 @@ Para esta monitorización nos ayudaremos de los **Runbooks** que nos ofrece la c
   <img src="https://live.staticflickr.com/65535/32885755907_13531bf13f_z.jpg" width="640" height="349" alt="Runbooks">
 </p>
 
-En la creación de este seleccionaremos que sea de tipo **PowerShell**.
+En la creación de este, seleccionaremos que sea de tipo **PowerShell**.
 
 <p align="center">
   <img src="https://live.staticflickr.com/65535/32885769807_e861c6a2cc.jpg" width="319" height="349" alt="NewRunBook">
 </p>
+
+A continuación añadiremos el código del archivo **Automatizacion.ps1**. Hasta la línea 419 corresponde con la importación de módulos de PowerShell de AzureRM para que funcione correctamente. En el resto del código, realizaremos los siguientes pasos:
+
+* Primero deberemos conectarnos al tenant de Azure
+
+```PowerShell
+$User = "<TENANT DE AZURE>"
+$PWord = ConvertTo-SecureString -String '<PASSWORD>' -AsPlainText -Force
+$Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $User, $PWord
+
+Connect-AzureRmAccount -Credential $Credential
+```
+* A continuación realizaremos una solicitud HTTP al servicio Web del balanceador
+
+```PowerShell
+$WebServer1 = Invoke-WebRequest "http://<IP PUBLICA BALANCEADOR>" -UseBasicParsing
+
+$Estado1 = $WebServer.StatusCode
+```
+* En la primera condición estableceremos que si el servicio responde correctamente nos devolverá una salida como **"STATUS OK"** y finalizará el proceso.
+
+```PowerShell
+if ($Estado1 -eq 200){
+
+        Write-Output "STATUS OK"
+
+        exit 0
+
+}
+```
+
+* Si la respuesta fuese distinta a un correcto funcionamiento, le daríamos la orden de que reiniciara las dos máquinas, volviera a realizar la solicitud y si el estado es correcto finaliza el proceso. En caso contrario, reiniciará las máquinas hasta un total de 3 veces, y si el servicio siguiera indisponible, nos devolvería la salida **"STATUS NOK"**.
+
+```PowerShell
+if ($Estado1 -eq 200){
+
+        Write-Output "STATUS OK"
+
+        exit 0
+
+}
+
+else {
+      Write-Output "STATUS KO Reiniciando Maquinas"
+
+      $i = 1
+
+      DO{
+
+        $restart1 = Restart-AzureRmVM -ResourceGroupName "RG-WebEmpresa" -Name "WebEmpresa1"
+        $restart2 = Restart-AzureRmVM -ResourceGroupName "RG-WebEmpresa" -Name "WebEmpresa2"
+
+        $WebServer2 = Invoke-WebRequest "http://<IP PUBLICA BALANCEADOR>"
+
+        $Estado2 = $WebServer.StatusCode
+
+      }While(($Estado2 -eq 200)-or ($i -le 3))
+
+      If ($Estado2 -eq 200){
+
+        Write-Output "Servicio Reestablecido"
+
+        Exit 1
+      }
+      else{
+
+        Write-Output "STATUS NOK"
+
+        Exit 2
+      }
+}
+```
