@@ -256,3 +256,17 @@ Una vez que se ha compilado correctamente el archivo, añadiremos los nodos del 
 </p>
 
 Para comprobar el correcto funcionamiento, podemos acceder a la IP pública del balanceador de carga a través de un navegador y nos aparecerá la página predeterminada del IIS.
+
+## Monitorización servicio Web
+
+Para esta monitorización nos ayudaremos de los **Runbooks** que nos ofrece la cuenta de automatización. Estos, nos permitirán ejecutar scripts en PowerShell sin necesidad de crear otra máquina.
+
+<p align="center">
+  <img src="https://live.staticflickr.com/65535/32885755907_13531bf13f_z.jpg" width="640" height="349" alt="Runbooks">
+</p>
+
+En la creación de este seleccionaremos que sea de tipo **PowerShell**.
+
+<p align="center">
+  <img src="https://live.staticflickr.com/65535/32885769807_e861c6a2cc.jpg" width="319" height="349" alt="NewRunBook">
+</p>
