@@ -6,7 +6,7 @@ Se nos solicita implementar un script de automatización que despliegue dos máq
 
 ** Insertar esquema **
 
-## Procedimiento
+## Script automatización creación de máquinas
 
 Primero procederemos a crear el Script para la creación de las dos máquinas virtuales. Mediante este script configuraremos los siguientes elementos:
 
@@ -21,7 +21,7 @@ New-AzResourceGroup `
 ```
 * Crear una dirección IP pública
 
-Asociaremos la IP pública al grupo de recursos creados:
+Para que tengamos acceso desde Internet al servicio IIS deberemos de asignarle una IP pública a la que llamaremos **WebEmpresaIP**, la cual asociaremos al recurso anteriormente creado:
 
 ```PowerShell
 $1publicIP = New-AzPublicIpAddress `
@@ -33,6 +33,8 @@ $1publicIP = New-AzPublicIpAddress `
 
 * Creación de un grupo de direcciones IP de front-end
 
+Antes de pasar a la creación del Load Balancer, definiremos el nombre de la pila de direcciones de front-end de este:
+
 ```PowerShell
 $1frontendIP = New-AzLoadBalancerFrontendIpConfig `
   -Name "WebFrontEndPool" `
@@ -41,12 +43,16 @@ $1frontendIP = New-AzLoadBalancerFrontendIpConfig `
 
 * Creación de un grupo de direcciones de back-end
 
+También haremos lo mismo con la pila de direcciones del back-end:
+
 ```PowerShell
 $1backendPool = New-AzLoadBalancerBackendAddressPoolConfig `
   -Name "WebBackEndPool"
 ```
 
 * Creación del balanceador de carga
+
+Una vez definidos las pilas, procederemos a crear el balanceador:
 
 ```PowerShell
 $1lb = New-AzLoadBalancer `
@@ -56,17 +62,18 @@ $1lb = New-AzLoadBalancer `
   -FrontendIpConfiguration $1frontendIP `
   -BackendAddressPool $1backendPool
 ```
-* Creación de un sondeo de estado
+* Creación de la sonda de estado
+
+Esta sonda, supervisará el estado del servicio, y por defecto después de dos errores consecutivos en un intervalo de 15 segundos, quitará la máquina que reporte el error de la distribución del equilibrador de carga:
 
 ```PowerShell
 Add-AzLoadBalancerProbeConfig `
   -Name "Hubble" `
   -LoadBalancer $1lb `
-  -Protocol http `
+  -Protocol tcp `
   -Port 80 `
-  -RequestPath / `
   -IntervalInSeconds 15 `
-  -ProbeCount 3
+  -ProbeCount 2
 ```
 
 * Aplicamos el sondeo de estado
@@ -76,6 +83,8 @@ Set-AzLoadBalancer -LoadBalancer $1lb
 ```
 
 * Creación de una regla de equilibrador de carga
+
+En base a la sonda creada y las pilas de direcciones determinaremos que la regla equilibre el tráfico en el puerto TCP 80:
 
 ```PowerShell
 $1probe = Get-AzLoadBalancerProbeConfig -LoadBalancer $1lb -Name "Hubble"
@@ -100,6 +109,8 @@ Set-AzLoadBalancer -LoadBalancer $1lb
 
 * Creamos la configuración de la subNet
 
+Antes de ponernos a crear las máquinas, tendremos que configurar las redes virtuales que asignarles. Primero configuraremos la subn:
+
 ```PowerShell
 $1subnetConfig = New-AzVirtualNetworkSubnetConfig `
   -Name $1SubnetName `
@@ -107,6 +118,8 @@ $1subnetConfig = New-AzVirtualNetworkSubnetConfig `
 ```
 
 * Creamos la Red Virtual
+
+Una vez que tenemos la configuración de la subnet, procederemos a crear la red virtual:
 
 ```PowerShell
 $1vnet = New-AzVirtualNetwork `
@@ -133,6 +146,8 @@ for ($i=1; $i -le 2; $i++)
 
 * Creación de AzAvailabilitySet
 
+Crearemos el AvailabilitySet, para poder asociarlo a nuestro balanceador y también tener una mayor disponibilidad sobre las máquinas:
+
 ```PowerShell
 $1availabilitySet = New-AzAvailabilitySet `
   -ResourceGroupName $1ResourceGroupName `
@@ -149,7 +164,7 @@ $1availabilitySet = New-AzAvailabilitySet `
 $1cred = Get-Credential
 ```
 
-* Creación de la máquina virtual
+* Por último, creación de la máquina virtual
 
 ```PowerShell
 for ($i=1; $i -le 2; $i++)
