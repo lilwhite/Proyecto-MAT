@@ -146,21 +146,3 @@ for ($i=1; $i -le 2; $i++)
 
     Write-Host "Instalacion VM finalizada" -ForegroundColor DarkGreen -BackgroundColor Black
   }
-    <# Instalación IIS
-
-    Write-Host "Instalacion Servidor IIS iniciandose" -ForegroundColor DarkGreen -BackgroundColor Black
-
-    $1PublicSettings = '{"ModulesURL":"https://github.com/lilwhite/Proyecto-MAT/raw/master/Ejercicio-2/WebEmpresa.ps1.zip", "configurationFunction": "WebEmpresa.ps1\\WebEmpresa", "Properties": {"MachineName": '+'"'+$2vmName+'"'+'} }'
-
-    Set-AzVMExtension `
-      -ExtensionName "DSC" `
-      -ResourceGroupName $1ResourceGroupName `
-      -VMName $2vmName `
-      -Publisher "Microsoft.Powershell" `
-      -ExtensionType "DSC" `
-      -TypeHandlerVersion 2.7 `
-      -SettingString $1PublicSettings `
-      -Location $1Location
-
-    Write-Host "Instalacion Servidor IIS completada" -ForegroundColor DarkGreen -BackgroundColor Black
-  #>
