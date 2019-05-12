@@ -1,4 +1,4 @@
-# Creación del equilibrador de carga de Azure 
+# Creación del equilibrador de carga de Azure
 # https://docs.microsoft.com/es-es/azure/virtual-machines/windows/tutorial-load-balancer
 
 $1ResourceGroupName = "03-WebEmpresa"
@@ -53,11 +53,10 @@ Write-Host "Creacion de sonda de estado" -ForegroundColor DarkGreen -BackgroundC
 Add-AzLoadBalancerProbeConfig `
   -Name "Hubble" `
   -LoadBalancer $1lb `
-  -Protocol http `
+  -Protocol tcp `
   -Port 80 `
-  -RequestPath / `
   -IntervalInSeconds 15 `
-  -ProbeCount 3
+  -ProbeCount 2
 
 # Aplicamos el sondeo de estado
 
