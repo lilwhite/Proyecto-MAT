@@ -134,15 +134,12 @@ for ($i=1; $i -le 2; $i++)
     Write-Host "Instalacion VM iniciandose" -ForegroundColor DarkGreen -BackgroundColor Black
 
     $2vmName = $1vmName + $i
-    $2PublicIpAddressName = $1PublicIpAddressName + $i
 
     New-AzVM `
       -ResourceGroupName $1ResourceGroupName `
       -Name $2vmName `
       -Location $1location `
       -ImageName $1ImageName `
-      -VirtualNetworkName $1VirtualNetworkName `
-      -SubnetName $1SubnetName `
       -AvailabilitySetName "WebEmpresaAS" `
       -Credential $1cred `
       -Size $1Size `
