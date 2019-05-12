@@ -203,5 +203,5 @@ Connect-AzAccount
 Una vez ejecutado el script se nos habrán creado los siguientes recursos:
 
 <p align="center">
-  [url=https://flic.kr/p/2fSuYrB][img]https://live.staticflickr.com/65535/47829165101_61a59085c7_z.jpg[/img][/url][url=https://flic.kr/p/2fSuYrB]RG-Webempresa[/url] by [url=https://www.flickr.com/photos/141549114@N03/]Mario Blanco[/url], en Flickr
+  <a data-flickr-embed="true" data-footer="true"  href="https://www.flickr.com/photos/141549114@N03/47829165101/in/dateposted-public/" title="RG-Webempresa"><img src="https://live.staticflickr.com/65535/47829165101_61a59085c7.jpg" width="500" height="313" alt="RG-Webempresa"></a><script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
 </p>
