@@ -185,6 +185,21 @@ for ($i=1; $i -le 2; $i++)
       -OpenPorts 80
   }
 ```
-El sript está basado en el tutorial de Microsoft : **Equilibrio de carga de máquinas virtuales Windows en Azure para crear una aplicación de alta disponibilidad**.
+
+El archivo correspondiente con el script en PowerShell sería **LoadBalancer.ps1**.
+
+Este sript está basado en el tutorial de Microsoft : **Equilibrio de carga de máquinas virtuales Windows en Azure para crear una aplicación de alta disponibilidad**.
 
 https://docs.microsoft.com/es-es/azure/virtual-machines/windows/tutorial-load-balancer
+
+Antes de lanzar el script deberemos estar conectados a nuestro tenant de Azure mediante el siguiente commando:
+
+```PowerShell
+Connect-AzAccount
+```
+
+##Despliegue de IIS mediante DSC
+
+Una vez ejecutado el script se nos habrán creado los siguientes recursos:
+
+![recursos](https://flic.kr/p/2fSuYrB)
