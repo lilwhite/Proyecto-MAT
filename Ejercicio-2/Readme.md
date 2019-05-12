@@ -6,7 +6,7 @@ Se nos solicita implementar un script de automatización que despliegue dos máq
 
 ** Insertar esquema **
 
-## Script automatización creación de máquinas
+## Script de automatización para la creación de máquinas y balanceador de carga
 
 Primero procederemos a crear el Script para la creación de las dos máquinas virtuales. Mediante este script configuraremos los siguientes elementos:
 
@@ -185,3 +185,6 @@ for ($i=1; $i -le 2; $i++)
       -OpenPorts 80
   }
 ```
+El sript está basado en el tutorial de Microsoft : **Equilibrio de carga de máquinas virtuales Windows en Azure para crear una aplicación de alta disponibilidad**.
+
+https://docs.microsoft.com/es-es/azure/virtual-machines/windows/tutorial-load-balancer
