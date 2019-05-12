@@ -203,5 +203,5 @@ Connect-AzAccount
 Una vez ejecutado el script se nos habrán creado los siguientes recursos:
 
 <p align="center">
-  <img src="https://live.staticflickr.com/65535/47829165101_61a59085c7.jpg" width="500" height="313" alt="RG-Webempresa">
+  <img src="https://live.staticflickr.com/65535/47829165101_61a59085c7_z.jpg" width="640" height="401" alt="RG-Webempresa">
 </p>
