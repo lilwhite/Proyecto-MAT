@@ -6,6 +6,9 @@
 <ul>
   <li>Instalamos la máquina Ubuntu, con disco no gestionado</li>
   <li>apt-get install apache2</li>
+  <li>apt-get install audtid</li>
+  <li>crearemos una carpeta para el agente</li>
+  <li>wget https://raw.githubusercontent.com/Microsoft/OMS-Agent-for-Linux/master/installer/scripts/onboard_agent.sh && sh onboard_agent.sh -w <YOUR WORKSPACE ID> -s <YOUR WORKSPACE PRIMARY KEY> -d opinsights.azure.us</li>
   <li>sudo waagent -deprovision</li>
   <li>Paramos la máquina</li>
   <li>Una vez desasignada realizaremos la captura</li>
