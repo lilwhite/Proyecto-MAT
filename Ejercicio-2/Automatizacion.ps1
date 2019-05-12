@@ -422,21 +422,15 @@ Import-ModulesInAutomationAccordingToDependency $ModuleImportMapOrder
 
 # AzureDiagnostics | where ResourceProvider == "MICROSOFT.AUTOMATION"
 
-$User = "******@******.onmicrosoft.com"
-$PWord = ConvertTo-SecureString -String '*****' -AsPlainText -Force
+$User = "<TENANT DE AZURE>"
+$PWord = ConvertTo-SecureString -String '<PASSWORD>' -AsPlainText -Force
 $Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $User, $PWord
 
 Connect-AzureRmAccount -Credential $Credential
 
-# $1publica = Get-AzureRmPublicIpAddress -Name "WebEmpresaIP" -ResourceGroupName "03-WebEmpresa"
-
-# $2publica = $1publica.IpAddress
-
-$WebServer1 = Invoke-WebRequest "http://$2publica" -UseBasicParsing
+$WebServer1 = Invoke-WebRequest "http://<IP PUBLICA BALANCEADOR>" -UseBasicParsing
 
 $Estado1 = $WebServer.StatusCode
-
-# AzureDiagnostics | where ResourceProvider == "MICROSOFT.AUTOMATION"
 
 if ($Estado1 -eq 200){
 
@@ -456,7 +450,7 @@ else {
         $restart1 = Restart-AzureRmVM -ResourceGroupName "RG-WebEmpresa" -Name "WebEmpresa1"
         $restart2 = Restart-AzureRmVM -ResourceGroupName "RG-WebEmpresa" -Name "WebEmpresa2"
 
-        $WebServer2 = Invoke-WebRequest "http://$2publica"
+        $WebServer2 = Invoke-WebRequest "http://<IP PUBLICA BALANCEADOR>"
 
         $Estado2 = $WebServer.StatusCode
 
