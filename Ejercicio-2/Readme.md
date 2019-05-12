@@ -342,3 +342,16 @@ else {
       }
 }
 ```
+Una vez que tenemos ya el script de automatización, guardamos, lo publicamos y nos deberá aparecer en el listado de runbooks disponibles. A continación tendremos que crear la programación del script. Nos dirigiremos al apartado de **Schedule** e indicaremos el inicio de cualquier hora, lo seleccionamos como recurrente y crearemos otros 3 más cada 15 minutos, para que el servicio en caso de caída esté como máximo 15 minutos:
+
+<p align="center">
+<img src="https://live.staticflickr.com/65535/47040259114_9455a72303_z.jpg" width="640" height="400" alt="Schedule">
+</p>
+
+Volveremos al runbook que hemos creado y le asignaremos los **Schedule** con los siguientes parámetros:
+
+<p align="center">
+<img src="https://live.staticflickr.com/65535/47040284174_36381b8837_z.jpg" width="374" height="640" alt="Programación">
+</p>
+
+Teniendo ya la programación del script, podemos lanzarlo para comprobar como recoge las salidas:
