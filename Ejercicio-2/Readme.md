@@ -205,3 +205,9 @@ Una vez ejecutado el script se nos habrán creado los siguientes recursos:
 <p align="center">
   <img src="https://live.staticflickr.com/65535/47829165101_61a59085c7_z.jpg" width="640" height="401" alt="RG-Webempresa">
 </p>
+
+A continuación, deberemos crear una cuenta de automatización para la instalación del IIS en las máquinas del balanceador de carga.
+
+<p align="center">
+  <img src="https://live.staticflickr.com/65535/32885509987_fe28ffd34e_o.png" width="315" height="437" alt="Cuenta de automatización">
+</p>
