@@ -92,8 +92,6 @@ Procedemos a desplegar la plantilla personalizada
   <img src="https://live.staticflickr.com/65535/32892687807_70317bb54a_o.png" width="161" height="34" alt="boton">
 </a>
 
-<br>
-
 <p align="center">
   <img src="https://live.staticflickr.com/65535/47784611092_c331a57b8b_o.jpg" width="943" height="1087" alt="PlantillaPersonalizada">
 </p>
@@ -117,4 +115,10 @@ Una vez finalizado el despliegue, comprobaremos que efectivamente, únicamente s
 
 <p align="center">
   <img src="https://live.staticflickr.com/65535/47784690812_7a4243052f_o.jpg" width="1375" height="1063" alt="Captura de pantalla 2019-05-13 a las 1.18.57">
+</p>
+
+Para realizar las pruebas de rendiemto sobre las máquinas habilitaremos **Boot Diagnostics** en el scale set, y dentro de las instancias tendremos que actualizar la máquina para que reciba el boot diagnostics y así habilitar la consola remota:
+
+<p align="center">
+  <img src="https://live.staticflickr.com/65535/46920541205_71987bc5aa_o.png" width="855" height="378" alt="Upgrade">
 </p>
