@@ -243,3 +243,16 @@ Configuration WebEmpresa
   }
 }
 ```
+Cuando comprobemos que se ha añadido correctamente, pulsaremos sobre el objeto y procedermos a realizar la compilación del archivo.
+
+<p align="center">
+  <img src="https://live.staticflickr.com/65535/40862902963_10aaf50545_z.jpg" width="640" height="496" alt="Compilación">
+</p>
+
+Una vez que se ha compilado correctamente el archivo, añadiremos los nodos del balanceador de carga. Esto hará que sea la cuenta de automatización, la que se encargue de realizar la configuración del DSC sobre los nodos.
+
+<p align="center">
+  <img src="https://live.staticflickr.com/65535/47829490291_b5dcea6d3c_z.jpg" width="640" height="272" alt="Configuración de nodos">
+</p>
+
+Para comprobar el correcto funcionamiento, podemos acceder a la IP pública del balanceador de carga a través de un navegador y nos aparecerá la página predeterminada del IIS.
