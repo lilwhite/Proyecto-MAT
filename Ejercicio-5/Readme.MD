@@ -111,3 +111,9 @@ Con respecto a la URI del VHD, la podremos encontrar en la cuenta de almacenamie
 <p align="center">
   <img src="https://live.staticflickr.com/65535/33959394468_c33688f199_o.jpg" width="1258" height="967" alt="VHD">
 </p>
+
+Una vez finalizado el despliegue, comprobaremos que efectivamente, únicamente se encuentra una instancia activa.
+
+<p align="center">
+  <img src="https://live.staticflickr.com/65535/47784690812_7a4243052f_o.jpg" width="1375" height="1063" alt="Captura de pantalla 2019-05-13 a las 1.18.57">
+</p>
