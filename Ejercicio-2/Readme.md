@@ -211,3 +211,35 @@ A continuación, deberemos crear una cuenta de automatización para la instalaci
 <p align="center">
   <img src="https://live.staticflickr.com/65535/32885509987_fe28ffd34e_o.png" width="315" height="437" alt="Cuenta de automatización">
 </p>
+
+Una vez creada, nos dirigiremos a la pestaña de **State Configuration (DSC)** y añadiremos una nueva configuración.
+
+<p align="center">
+  <img src="https://live.staticflickr.com/65535/33952094228_a8542ecbf6_z.jpg" width="640" height="336" alt="DSC">
+</p>
+
+Ahora procederemos a añadir nuestro archivo **WebEmpresa.ps1** para la instalación del IIS.
+
+```PowerShell
+Configuration WebEmpresa
+{
+  param ()
+
+  Node 'localhost'
+  {
+    #Install the IIS Role
+    WindowsFeature IIS
+    {
+      Ensure = "Present"
+      Name = "Web-Server"
+      IncludeAllSubFeature = $true
+    }
+    #Install ASP.NET 4.5
+    WindowsFeature ASP
+    {
+      Ensure = "Present"
+      Name = "Web-Asp-Net45"
+    }
+  }
+}
+```
