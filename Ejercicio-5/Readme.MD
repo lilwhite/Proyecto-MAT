@@ -52,3 +52,19 @@ mkdir agente
 #Accedemos a la carpeta
 cd agente
 ```
+
+Posteriormente nos dirigiremos a **Advanced settings** dentro de nuestro WorkSpace de Logs Analytics, y procederemos a copiar el comando para descargar el agente en nuestra máquina
+
+<p align="center">
+  <img src="https://live.staticflickr.com/65535/47782984512_208a561746_z.jpg" width="640" height="314" alt="Agente">
+</p>
+
+```Bash
+wget https://raw.githubusercontent.com/Microsoft/OMS-Agent-for-Linux/master/installer/scripts/onboard_agent.sh && sh onboard_agent.sh -w <YOUR WORKSPACE ID> -s <YOUR WORKSPACE PRIMARY KEY> -d opinsights.azure.us
+```
+
+Y para dejar la máquina desprovisionada, ejecutaremos el siguiente comando:
+
+```Bash
+sudo waagent -deprovision
+```
