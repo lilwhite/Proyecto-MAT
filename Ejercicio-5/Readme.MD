@@ -92,6 +92,22 @@ Procedemos a desplegar la plantilla personalizada
   <img src="https://live.staticflickr.com/65535/32892687807_70317bb54a_o.png" width="161" height="34" alt="boton">
 </a>
 
+
 <p align="center">
   <img src="https://live.staticflickr.com/65535/47784611092_c331a57b8b_o.jpg" width="943" height="1087" alt="PlantillaPersonalizada">
+</p>
+
+Como vemos en la imagen nos requerirá los siguientes parámetros:
+
+* Grupo de recursos
+* Tamaño de las instancias a desplegar
+* Nombre de la máquina
+* Número de instancias que desplegará en un inicio
+* Usuario y password
+* URI del VHD
+
+Con respecto a la URI del VHD, la podremos encontrar en la cuenta de almacenamiento. De ahí la importancia de no haber creado anteriormente la imagen con un disco gestionado.
+
+<p align="center">
+  <img src="https://live.staticflickr.com/65535/33959394468_c33688f199_o.jpg" width="1258" height="967" alt="VHD">
 </p>
