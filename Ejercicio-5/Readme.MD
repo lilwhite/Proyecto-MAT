@@ -92,6 +92,7 @@ Procedemos a desplegar la plantilla personalizada
   <img src="https://live.staticflickr.com/65535/32892687807_70317bb54a_o.png" width="161" height="34" alt="boton">
 </a>
 
+<br>
 
 <p align="center">
   <img src="https://live.staticflickr.com/65535/47784611092_c331a57b8b_o.jpg" width="943" height="1087" alt="PlantillaPersonalizada">
