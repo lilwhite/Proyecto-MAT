@@ -201,7 +201,3 @@ Connect-AzAccount
 ##Despliegue de IIS mediante DSC
 
 Una vez ejecutado el script se nos habrán creado los siguientes recursos:
-
-<p align="center">
-  <a data-flickr-embed="true" data-footer="true"  href="https://www.flickr.com/photos/141549114@N03/47829165101/in/dateposted-public/" title="RG-Webempresa"><img src="https://live.staticflickr.com/65535/47829165101_61a59085c7.jpg" width="500" height="313" alt="RG-Webempresa"></a><script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
-</p>
