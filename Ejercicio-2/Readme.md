@@ -198,6 +198,10 @@ Antes de lanzar el script deberemos estar conectados a nuestro tenant de Azure m
 Connect-AzAccount
 ```
 
-##Despliegue de IIS mediante DSC
+## Despliegue de IIS mediante DSC
 
 Una vez ejecutado el script se nos habrán creado los siguientes recursos:
+
+<p align="center">
+  <img src="https://live.staticflickr.com/65535/47829165101_61a59085c7.jpg" width="500" height="313" alt="RG-Webempresa">
+</p>
