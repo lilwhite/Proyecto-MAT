@@ -355,3 +355,21 @@ Volveremos al runbook que hemos creado y le asignaremos los **Schedule** con los
 </p>
 
 Teniendo ya la programación del script, podemos lanzarlo para comprobar como recoge las salidas:
+
+<p align="center">
+<img src="https://live.staticflickr.com/65535/46918276965_5c9e03e304_z.jpg" width="640" height="137" alt="Status">
+</p>
+
+Habilitaremos la recogida de logs para que los envíen a Log Analytics:
+
+<p align="center">
+<img src="https://live.staticflickr.com/65535/46918299345_cc143616bc_z.jpg" width="640" height="171" alt="TurnOn">
+</p>
+
+Mediante la siguiente query nos mostrará el resultado de los estados OK:
+
+```Kusto
+AzureDiagnostics | where ResourceProvider == "MICROSOFT.AUTOMATION"
+| where StreamType_s == "Output"
+| where ResultDescription == "STATUS NOK" 
+```
