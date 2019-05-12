@@ -82,6 +82,16 @@ Una vez parada, podemos proceder a eliminar todos los recursos a excepción de l
 
 ## Despliegue de Scale-Set
 
+La plantilla **ScaleSet.json** despliega el scale set con las características requeridas. La plantilla está basada en las Quick Templates de Microsoft
+
+https://github.com/Azure/azure-quickstart-templates/tree/master/201-vmss-linux-customimage-autoscale
+
+Procedemos a desplegar la plantilla personalizada
+
 <a href=https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Flilwhite%2FProyecto-MAT%2Fmaster%2FEjercicio-5%2FScaleSet.json rel="nofollow">
   <img src="https://live.staticflickr.com/65535/32892687807_70317bb54a_o.png" width="161" height="34" alt="boton">
 </a>
+
+<p align="center">
+  <img src="https://live.staticflickr.com/65535/47784611092_c331a57b8b_o.jpg" width="943" height="1087" alt="PlantillaPersonalizada">
+</p>
