@@ -371,5 +371,30 @@ Mediante la siguiente query nos mostrará el resultado de los estados OK:
 ```Kusto
 AzureDiagnostics | where ResourceProvider == "MICROSOFT.AUTOMATION"
 | where StreamType_s == "Output"
-| where ResultDescription == "STATUS OK" 
+| where ResultDescription == "STATUS OK"
 ```
+## Creación de alerta al administrador
+
+Una vez que tenemos ya monitorizado el servicio web, mediante la query para comprobar su estado, generaremos la nueva alerta:
+
+<p align="center">
+<img src="https://live.staticflickr.com/65535/33957418448_4bb5b4afef_z.jpg" width="640" height="97" alt="Alerta1">
+</p>
+
+En la condición le indicaremos que nos envíe la alerta en el momento que registre un nuevo valor:
+
+<p align="center">
+<img src="https://live.staticflickr.com/65535/46918379495_6a37b78f97_z.jpg" width="640" height="396" alt="Alerta2">
+</p>
+
+A continuación añadiremos la acción, que en nuestro caso será enviar un correo al administrador:
+
+<p align="center">
+<img src="https://live.staticflickr.com/65535/40868100523_cbeddb3a0f_z.jpg" width="640" height="531" alt="Alerta3">
+</p>
+
+Desde **Monitor Alert** comprobaremos la nueva alerta creada:
+
+<p align="center">
+<img src="https://live.staticflickr.com/65535/33957501458_df600a8259_z.jpg" width="640" height="203" alt="Alerta4">
+</p>
