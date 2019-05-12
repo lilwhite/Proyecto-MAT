@@ -271,7 +271,7 @@ En la creación de este, seleccionaremos que sea de tipo **PowerShell**.
   <img src="https://live.staticflickr.com/65535/32885769807_e861c6a2cc.jpg" width="319" height="349" alt="NewRunBook">
 </p>
 
-A continuación añadiremos el código del archivo **Automatizacion.ps1**. Hasta la línea 419 corresponde con la importación de módulos de PowerShell de AzureRM para que funcione correctamente. En el resto del código, realizaremos los siguientes pasos:
+A continuación añadiremos el código del archivo **Automatizacion.ps1**. Hasta la línea 419 corresponde con la importación de módulos de PowerShell de AzureRM para que funcione correctamente (https://docs.microsoft.com/en-us/azure/automation/automation-update-azure-modules). En el resto del código, realizaremos los siguientes pasos:
 
 * Primero deberemos conectarnos al tenant de Azure
 
