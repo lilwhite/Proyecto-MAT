@@ -430,7 +430,7 @@ Connect-AzureRmAccount -Credential $Credential
 
 $WebServer1 = Invoke-WebRequest "http://<IP PUBLICA BALANCEADOR>" -UseBasicParsing
 
-$Estado1 = $WebServer.StatusCode
+$Estado1 = $WebServer1.StatusCode
 
 if ($Estado1 -eq 200){
 
@@ -452,7 +452,7 @@ else {
 
         $WebServer2 = Invoke-WebRequest "http://<IP PUBLICA BALANCEADOR>"
 
-        $Estado2 = $WebServer.StatusCode
+        $Estado2 = $WebServer2.StatusCode
 
       }While(($Estado2 -eq 200)-or ($i -le 3))
 
