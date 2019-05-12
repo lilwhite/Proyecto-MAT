@@ -129,3 +129,23 @@ Una vez actualizada ya podremos insertar el comando **cat /dev/zero >/dev/null**
 <p align="center">
   <img src="https://live.staticflickr.com/65535/47784763492_e60f08c94b_o.png" width="810" height="336" alt="Consola">
 </p>
+
+## Creación dashboard
+
+Primero deberemos crear un nuevo dashboard y compartirlo para así poder enviar las métricas más tarde.
+
+<p align="center">
+  <img src="https://live.staticflickr.com/65535/46920581915_3e83b2805f_o.png" width="1379" height="430" alt="Captura de pantalla 2019-05-13 a las 1.40.12">
+</p>
+
+Una vez publicado, si recordamos, anteriormente instalamos el agente de Log Analytics en la máquina Ubuntu que utilizamos como plantilla. Por lo que la instancia activa, tendrá también instalado el agente con las mismas claves, así podremos recoger las métricas fácilmente. Ejecutaremos la siguiente query, que nos mostrará el rendimiento de la CPU de las instancias activas durante las últimas 24 horas:
+
+```Kusto
+// Uso de CPU de instancias en ScaleSet
+Perf
+| where ObjectName   == "Processor"
+| where CounterName == "% Processor Time"
+| where InstanceName == "_Total"
+| summarize avg(CounterValue) by Computer, bin(TimeGenerated, 1m)
+| render timechart
+```
