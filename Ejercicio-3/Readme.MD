@@ -49,3 +49,7 @@ El acceso será del tipo **Point-to-Site**, ya que nos conectaremos desde una m�
 <p align="center">
   <img src="https://live.staticflickr.com/65535/47844555131_8e7b1d2a58_z.jpg" width="640" height="318" alt="Captura de pantalla 2019-05-14 a las 0.21.13">
 </p>
+
+Una vez que guardemos la configuración, nos permitirá descargar el cliente de VPN para establecer la conexión desde nuestro equipo on-premises. Dentro de estos estos archivos deberemos de instalar el certificado raíz que aparece, que se instalará dentro de la Autoridades Certificadoras de Confianza.
+
+Para más información podemos encontrar información en la documentación de Microsoft https://docs.microsoft.com/es-es/azure/vpn-gateway/point-to-site-about
