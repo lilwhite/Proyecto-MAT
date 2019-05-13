@@ -43,3 +43,9 @@ Una vez hecho esto, proseguiremos al despliegue en Azure. Primero deberemos de c
 <p align="center">
   <img src="https://live.staticflickr.com/65535/33967043368_7301ff6a01_z.jpg" width="640" height="211" alt="Captura de pantalla 2019-05-13 a las 23.57.54">
 </p>
+
+El acceso será del tipo **Point-to-Site**, ya que nos conectaremos desde una máquina on-premises. Para ello nos dirigiremos a la opción de **Point-to-Site Configration**. Desde aquí le indicaremos un espacio de direcciones válido, el nombre de la conexión y deberemos de insertar el código del certificado en el campo de **PUBLIC CERTIFICATE DATA**. La conexión que estableceremos será de tipo SSTP.
+
+<p align="center">
+  <img src="https://live.staticflickr.com/65535/47844555131_8e7b1d2a58_z.jpg" width="640" height="318" alt="Captura de pantalla 2019-05-14 a las 0.21.13">
+</p>
