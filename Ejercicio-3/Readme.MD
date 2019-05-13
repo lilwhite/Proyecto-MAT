@@ -53,3 +53,9 @@ El acceso será del tipo **Point-to-Site**, ya que nos conectaremos desde una m�
 Una vez que guardemos la configuración, nos permitirá descargar el cliente de VPN para establecer la conexión desde nuestro equipo on-premises. Dentro de estos estos archivos deberemos de instalar el certificado raíz que aparece, que se instalará dentro de la Autoridades Certificadoras de Confianza.
 
 Para más información podemos encontrar información en la documentación de Microsoft https://docs.microsoft.com/es-es/azure/vpn-gateway/point-to-site-about
+
+Una vez que establezcamos la conexión mediante VPN deberemos crear un **Network Security Group** asociado a la VNET del servicio IIS (WebVNET), y habilitar el puerto 3389. Podemos habilitar también el puerto 80 para comprobar la disponibilidad del servicio.
+
+<p align="center">
+  <img src="https://i.imgur.com/QcrptPsm.png?1" title="source: imgur.com" />
+</p>
