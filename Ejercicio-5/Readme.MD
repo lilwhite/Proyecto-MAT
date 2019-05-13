@@ -153,3 +153,11 @@ Perf
 <p align="center">
   <img src="https://live.staticflickr.com/65535/47784839682_13487d0a4e_o.png" width="456" height="190" alt="Captura de pantalla 2019-05-13 a las 1.51.59">
 </p>
+
+## Generar alerta
+
+Para generar la alerta volveremos al recurso del Scale Set, y dentro de las opciones de escalado habilitaremos que envíe únicamente **AutoscaleScaleActions**.
+
+<p align="center">
+<img src="https://live.staticflickr.com/65535/47784879802_80f509a4cf_o.png" width="695" height="719" alt="ScaleLogs">
+</p>
