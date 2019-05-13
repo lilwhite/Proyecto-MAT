@@ -57,5 +57,5 @@ Para más información podemos encontrar información en la documentación de Mi
 Una vez que establezcamos la conexión mediante VPN deberemos crear un **Network Security Group** asociado a la VNET del servicio IIS (WebVNET), y habilitar el puerto 3389. Podemos habilitar también el puerto 80 para comprobar la disponibilidad del servicio.
 
 <p align="center">
-  <a href="https://imgur.com/QcrptPs"><img src="https://i.imgur.com/QcrptPsb.png?1" title="source: imgur.com" /></a>
+  <a href="https://imgur.com/QcrptPs"><img src="https://i.imgur.com/QcrptPsl.png?1" title="source: imgur.com" /></a>
 </p>
