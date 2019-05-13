@@ -14,6 +14,8 @@ En el dominio on-premises hay 20 usuarios repartidos en 3 grupos:
 * Logística: 7 usuarios
 * Desarrollo: 10 usuarios
 
+Este es el esquema que presentará el proyecto.
+
 <p align="center">
   <img src="https://live.staticflickr.com/65535/46927189805_6403bd0d91_z.jpg" width="640" height="475" alt="Esquema">
 </p>
