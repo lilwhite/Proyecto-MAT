@@ -2,7 +2,7 @@
 
 Como este servicio balanceado es crítico para la organización, debemos implementar un nivel adecuado de seguridad. Con este objetivo debes garantizar que las máquinas virtuales están protegidas mediante Azure Backup y que el acceso remoto a las mismas para los administradores está protegido de forma que sólo sea posible mediante una VPN para estos administradores.
 
-# Backup
+## Backup
 
 Primero comenzaremos creando un **Recovery Service Vault** dentro del grupo de recursos.
 
@@ -32,7 +32,7 @@ Finalmente deberemos esperar a que se realicen los Backup de las máquinas segú
   <img src="https://live.staticflickr.com/65535/47844403751_2302b17fb3_o.png" width="640" height="211" alt="Backup">
 </p>
 
-# Acceso mediante VPN
+## Acceso mediante VPN
 
 Para permitir el acceso mediante VPN deberemos haber implementado anteriormente una **Autoridad Certificadora** on-premises, la cual emita certificados de usuario únicamente a los usuarios que pertenezcan al grupo de administradores. Con esto lograremos discriminar al resto de usuarios directamente.
 
