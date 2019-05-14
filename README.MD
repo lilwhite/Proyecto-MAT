@@ -1,4 +1,4 @@
-# Proyecto MAT
+# Proyecto MAT
 
 <p align="center">
   <img src="https://live.staticflickr.com/65535/46851389975_c77e07b157_n.jpg" width="300" height="300" alt="MAT_logo">
