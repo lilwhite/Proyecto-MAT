@@ -17,3 +17,23 @@ Crearemos en un nuevo grupo de recursos nuestra base de datos SQL. Configuraremo
 <p align="center">
   <a href="https://imgur.com/EwoimVj"><img src="https://i.imgur.com/EwoimVjl.png" title="source: imgur.com" /></a>
 </p>
+
+Una vez desplegada, tendremos que realizar la conexión con la WebVNET para que los servidores tengan acceso a la base de datos. Para ello, deberemos de configurarlo a traves de las opciones de seguridad **Firewalls and virtual networks**. Añadiremos una nueva IP cliente y la asociaremos a la VNET indicada.
+
+<p align="center">
+  <a href="https://imgur.com/VZzg8j0"><img src="https://i.imgur.com/VZzg8j0l.png" title="source: imgur.com" /></a>
+</p>
+
+Esto creará un endpoint en la VNET mediante el cual podremos establecer la conexión.
+
+Comprobamos que la encriptación está activada por defecto.
+
+<p align="center">
+  <a href="https://imgur.com/tOFF4xY"><img src="https://i.imgur.com/tOFF4xYl.png" title="source: imgur.com" /></a>
+</p>
+
+Y finalmente añadiremos una capa de enmascaramiento:
+
+<p align="center">
+  <a href="https://imgur.com/st4aNSz"><img src="https://i.imgur.com/st4aNSzl.png" title="source: imgur.com" /></a>
+</p>
