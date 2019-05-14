@@ -142,8 +142,12 @@ Perf
 
 ## Generar alerta
 
-Para generar la alerta volveremos al recurso del Scale Set, y dentro de las opciones de escalado habilitaremos que envíe únicamente **AutoscaleScaleActions**.
+La alerta generada la crearemos a partir de la señal del servicio **Create or Update Virtual Machine Scale Set**
 
 <p align="center">
-<img src="https://live.staticflickr.com/65535/47784879802_80f509a4cf_o.png" width="695" height="719" alt="ScaleLogs">
+  <a href="https://imgur.com/qSO86sO"><img src="https://i.imgur.com/qSO86sOl.png" title="source: imgur.com" /></a>
+</p>
+
+<p align="center">
+  <a href="https://imgur.com/h52B0Ch"><img src="https://i.imgur.com/h52B0Chl.png" title="source: imgur.com" /></a>
 </p>
