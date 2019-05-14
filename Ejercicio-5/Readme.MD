@@ -140,6 +140,12 @@ Perf
   <img src="https://live.staticflickr.com/65535/47784839682_13487d0a4e_o.png" width="456" height="190" alt="Captura de pantalla 2019-05-13 a las 1.51.59">
 </p>
 
+Finalmente quedará de la siguiente manera
+
+<p align="center">
+  <a href="https://imgur.com/685lqSW"><img src="https://i.imgur.com/685lqSWl.png" title="source: imgur.com" /></a>
+</p>
+
 ## Generar alerta
 
 La alerta generada la crearemos a partir de la señal del servicio **Create or Update Virtual Machine Scale Set**
